@@ -142,9 +142,10 @@ public class Main {
 
         for (Package pack : packages) {
             resul.add(pack.getName());
-
             String scanPackage = pack.getName();
-            ClassPathScanningCandidateComponentProvider provide = new ClassPathScanningCandidateComponentProvider(false);
+            LectorRef lectorRef=new LectorRef();
+            lectorRef.proccesAnnotations(scanPackage);
+           /* ClassPathScanningCandidateComponentProvider provide = new ClassPathScanningCandidateComponentProvider(false);
             provide.addIncludeFilter(new AnnotationTypeFilter((Class<? extends Annotation>) Entity.class));
 
             ClassPathScanningCandidateComponentProvider provider = provide;
@@ -168,7 +169,7 @@ public class Main {
                     System.err.println("Got exception: " + e.getMessage());
                 }
             }
-
+            */
         }
 
 
