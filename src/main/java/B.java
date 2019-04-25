@@ -1,5 +1,6 @@
 import javax.persistence.*;
 
+@Entity(name = "ENTIDAD B")
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class B {

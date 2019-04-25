@@ -1,8 +1,6 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-
-
+import javax.persistence.*;
+@Table(name = "NOMBRE DE TABLA 1")
+@Inheritance
 @Entity(name = "ENTIDAD A")
 public class A extends B {
     public String toString() {
