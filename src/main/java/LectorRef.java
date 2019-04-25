@@ -61,8 +61,9 @@ public class LectorRef {
     }
 
 
-    public void readMembers(Class<?> cl) {
+     public void readMembers(Class<?> cl) {
         Field[] fields = cl.getFields();
+        String sentence = "";
         for (Field values : fields) {
             Annotation[] anot = values.getAnnotations();
             if (anot.length != 0) {
@@ -71,12 +72,52 @@ public class LectorRef {
                         Column column = values.getAnnotation(Column.class);
                         out.println(column.name() + " " + column.nullable() + " " + column.updatable() + " " + column.length() + " " + column.precision());
 
-                    } else {
-                        continue; // no tiene anotacion
+                        sentence += Columna(values);
+                    }
+                    if (values.isAnnotationPresent(Id.class)) {
+                        sentence += " " + ID(values);
                     }
                 }
             }
         }
+
+
+    }
+
+    public String Columna(Field field) {
+        String atributes = "";
+        Column column = field.getAnnotation(Column.class);
+        atributes += column.name().toString();
+
+        if (field.getType().getSimpleName().compareToIgnoreCase("String") == 0) {
+            atributes += " " + "varchar()";
+        } else {
+            if (field.getType().getSimpleName().compareToIgnoreCase("int") == 0) {
+                atributes += " " + "INT";
+            } else {
+                if (field.getType().getSimpleName().compareToIgnoreCase("float") == 0) {
+                    atributes += " " + "FLOAT" + "(" + column.precision() + "," + column.scale() + ")";
+                } else {
+                    if (field.getType().getSimpleName().compareToIgnoreCase("Double") == 0) {
+                        atributes += " " + "DOUBLE" + "(" + column.precision() + "," + column.scale() + ")";
+                    } else {
+                        if (field.getType().getSimpleName().compareToIgnoreCase("Double") == 0) {
+                            atributes += " " + "BOOLEAN";
+                        }
+                    }
+                }
+            }
+        }
+        if (column.nullable() == false) {
+            atributes += " " + "NOT NULL";
+        }
+        System.out.println(atributes);
+        return atributes;
+
+    }
+
+    public String ID(Field field) {
+        return "";
 
     }
 
