@@ -5,7 +5,7 @@ import javax.persistence.*;
 public class B {
     @Lob
     public String propiedad1;
-    @Column
+    @Column(name = "PropiedadNum2",nullable = true)
     public String propiedad2;
 
     public String toString() {

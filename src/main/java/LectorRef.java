@@ -2,6 +2,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import java.lang.annotation.Annotation;
@@ -18,6 +19,7 @@ public class LectorRef {
                 Class<?> cl = Class.forName(beanDef.getBeanClassName());//obtengo un Class de ese paquete
                 readClass(cl);
                 Field[] fields = cl.getFields();
+                readMembers(cl);
             } catch (Exception e) {
                 System.err.println("Got exception: " + e.getMessage());
             }
@@ -43,8 +45,22 @@ public class LectorRef {
 
     }
 
-    public void readMembers(Field[] fields) {
+    public void readMembers(Class<?> cl) {
+        Field[] fields = cl.getFields();
+        for (Field values : fields) {
+            Annotation[] anot = values.getAnnotations();
+            if (anot.length != 0) {
+                for (Annotation val : anot) {
+                    if (values.isAnnotationPresent(Column.class)) {
+                        Column column = values.getAnnotation(Column.class);
+                        System.out.println(column.name() + " " + column.nullable() + " " + column.updatable() + " " + column.length() + " " + column.precision());
 
+                    } else {
+                        continue; // no tiene anotacion
+                    }
+                }
+            }
+        }
 
     }
 

@@ -2,7 +2,7 @@ package Conexiones;
 
 import java.sql.*;
 
-public class JDBCBasePostgres implements  IConection {
+public class JDBCBasePostgres implements IConection {
     String url;
     String user;
     String password;
