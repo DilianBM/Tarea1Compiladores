@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import java.lang.reflect.Type;
+import java.sql.Clob;
 
 @Entity(name = "ENTIDAD B")
 @MappedSuperclass
@@ -6,6 +8,7 @@ import javax.persistence.*;
 public class B {
     @Lob
     public String propiedad1;
+    @Lob
     @Column(name = "PropiedadNum2",nullable = true)
     public String propiedad2;
 
@@ -13,10 +16,7 @@ public class B {
         return "esto es una B";
     }
 
-    @Column(name = "Basura")
-    public String basura() {
-        return "esto es una Basura";
-    }
+
 
 
 }
