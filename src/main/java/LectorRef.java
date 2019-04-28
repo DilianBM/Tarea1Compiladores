@@ -5,11 +5,13 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.System.out;
 
 public class LectorRef {
-
+    List<Entidad> ListaDeEntidades = new ArrayList<>();
 
     public void proccesAnnotations(String Package) {
         Entidad entidad;
@@ -23,10 +25,11 @@ public class LectorRef {
                 if (cl.isAnnotationPresent(Entity.class)) {
                     entidad = new Entidad();
                     readClass(cl, entidad);
+                    ListaDeEntidades.add(entidad);
 
                 }
 
-                Entity findable = cl.getAnnotation(Entity.class);//ve a ver si la clase esta anotada
+                //    Entity findable = cl.getAnnotation(Entity.class);//ve a ver si la clase esta anotada
 
 
             } catch (Exception e) {
@@ -37,16 +40,17 @@ public class LectorRef {
 
     public void readClass(Class<?> cl, Entidad entidad) {
         Annotation[] anotations = cl.getAnnotations();
-        readMembers(cl,entidad);
+        readMembers(cl, entidad);
         if (anotations.length != 0) {
             // System.out.println(anota.annotationType().getSimpleName());
             if (cl.isAnnotationPresent(Table.class)) {
                 Table tabla = cl.getAnnotation(Table.class);
                 entidad.setNombTable(tabla.name());
                 System.out.println(entidad.getNombTable());
-                readMembers(cl, entidad);
+
 
             }
+            readMembers(cl, entidad);
 
 
         } else {
@@ -66,28 +70,27 @@ public class LectorRef {
 
 
     public void readMembers(Class<?> cl, Entidad entidad) {
-        Field[] fields = cl.getFields();
-        String sentence = "";
+        Field[] fields = cl.getDeclaredFields();
         for (Field values : fields) {
             Annotation[] anot = values.getAnnotations();
             if (anot.length != 0) {
                 for (Annotation val : anot) {
                     if (values.isAnnotationPresent(Column.class)) {
                         Columna columna = new Columna();
-                        Column column = values.getAnnotation(Column.class);
-                        sentence += defirnirColumna(values);
+                        //Column column = values.getAnnotation(Column.class);
+                        entidad.setColumns(defirnirColumna(values));
+                        if (values.isAnnotationPresent(Id.class)) {
+                            entidad.setPrimaryKey(columna);
+                        }
                     }
-                    if (values.isAnnotationPresent(Id.class)) {
-                        sentence += " " + ID(values);
-                    }
-                    if (values.isAnnotationPresent(Lob.class)) {
+                    if (values.isAnnotationPresent(Enumerated.class)) {
 
+                        getEnumeracion(values);
 
                     }
                 }
             }
         }
-
 
     }
 
@@ -133,11 +136,9 @@ public class LectorRef {
             }
 
         }
-
-
         if (column.nullable() == false) {
             columna.setNullable(false);
-        }else{
+        } else {
             columna.setNullable(true);
         }
 
@@ -145,17 +146,14 @@ public class LectorRef {
 
     }
 
-    public String ID(Field field) {
-        return "PRIMARY KEY";
-    }
+    public String getEnumeracion(Field field) {
+        Enumerated enumeracion = field.getAnnotation(Enumerated.class);
+        System.out.println("val" + enumeracion.value().name());
+        if (enumeracion.value().toString().compareToIgnoreCase("STRING") == 0) {
+        } else {
 
-    public String LOB() {
 
-        return "";
-    }
-
-    public String Enumerated() {
-
+        }
         return "";
     }
 

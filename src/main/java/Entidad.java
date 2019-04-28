@@ -1,15 +1,25 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Entidad {
- Vector<Columna> columns;
- Columna PrimaryKey;
- String NombTable;
+    List<Columna> columns = new ArrayList<Columna>();
+    Columna primaryKey;
+    String nombTable;
 
-    public void setNombTable(String nombTable) {
-        NombTable = nombTable;
+    public void setNombTable(String nombreTable) {
+        nombTable = nombreTable;
     }
 
     public String getNombTable() {
-        return NombTable;
+        return nombTable;
+    }
+
+    public void setColumns(Columna column) {
+        columns.add(column);
+    }
+
+    public void setPrimaryKey(Columna primarykey) {
+        primaryKey = primarykey;
     }
 }
