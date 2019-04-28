@@ -32,7 +32,6 @@ enum MyEnum {
 
 @Table(name = "NOMBRE DE TABLA 2")
 @Entity()
-@MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class B {
     @Lob
@@ -41,11 +40,7 @@ public class B {
     @Column(name = "PropiedadNum2", nullable = true)
     public String propiedad2;
 
-    public String toString() {
-        return "esto es una B";
-    }
-
-    @Enumerated(value = EnumType.STRING)
+ //   @Enumerated(value = EnumType.STRING)
    MyEnum myEnum;
 
 

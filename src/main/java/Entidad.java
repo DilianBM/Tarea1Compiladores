@@ -22,4 +22,13 @@ public class Entidad {
     public void setPrimaryKey(Columna primarykey) {
         primaryKey = primarykey;
     }
+
+    public String imprimecolumns() {
+        String h = "";
+        for (int i = 0; i < columns.size(); i++) {
+
+            h = h +" "+ columns.get(i).getName();
+        }
+        return h;
+    }
 }
