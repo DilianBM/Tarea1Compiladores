@@ -1,6 +1,6 @@
+package ClasesPrueba;
+
 import javax.persistence.*;
-import java.lang.reflect.Type;
-import java.sql.Clob;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +41,8 @@ public class B {
     public String propiedad2;
 
  //   @Enumerated(value = EnumType.STRING)
+    @Column
+    @Enumerated(EnumType.ORDINAL)
    MyEnum myEnum;
 
 

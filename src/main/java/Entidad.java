@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Entidad {
     List<Columna> columns = new ArrayList<Columna>();
@@ -23,6 +22,10 @@ public class Entidad {
         primaryKey = primarykey;
     }
 
+    public Columna getPrimaryKey() {
+        return primaryKey;
+    }
+
     public String imprimecolumns() {
         String h = "";
         for (int i = 0; i < columns.size(); i++) {
@@ -31,4 +34,6 @@ public class Entidad {
         }
         return h;
     }
+
+
 }

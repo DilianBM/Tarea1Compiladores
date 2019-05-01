@@ -1,3 +1,5 @@
+package ClasesPrueba;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 

@@ -12,6 +12,7 @@ public class Columna {
         return nombreTipo;
     }
 
+
     public void setNombreTipo(String nombreTipo) {
         this.nombreTipo = nombreTipo;
     }
