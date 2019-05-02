@@ -1,5 +1,5 @@
 package Relaciones;
-public class OnetoMany {
+public class OnetoManyClass {
 String mappedBy="";
 String relatedEntity="";
 

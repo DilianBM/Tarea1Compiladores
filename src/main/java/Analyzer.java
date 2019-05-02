@@ -1,3 +1,6 @@
+import Relaciones.OnetoOneClass;
+import Relaciones.Relaciones;
+
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -8,7 +11,7 @@ import static java.lang.System.out;
 
 public class Analyzer {
     List<Entidad> ListaDeEntidades = new ArrayList<>();
-    Validations validations=new Validations();
+    Validations validations = new Validations();
 
 
     public void procesaEntidades(Class<?> cl) {
@@ -26,6 +29,9 @@ public class Analyzer {
             if (cl.isAnnotationPresent(Table.class)) {
                 Table tabla = cl.getAnnotation(Table.class);
                 entidad.setNombTable(tabla.name());
+                readMembers(cl, entidad);
+            } else {
+                entidad.setNombTable(cl.getSimpleName());
                 readMembers(cl, entidad);
             }
             if (cl.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
@@ -52,28 +58,31 @@ public class Analyzer {
             if (anot.length != 0) {
                 if (values.isAnnotationPresent(Column.class)) {
                     Columna columna = new Columna();
-                    columna = defirnirColumna(values,columna);
+                    columna = defirnirColumna(values, columna);
                     entidad.setColumns(columna);
                     if (values.isAnnotationPresent(Id.class)) {
                         entidad.setPrimaryKey(columna);
                     }
-
-
                 }
                 if (values.isAnnotationPresent(OneToOne.class)) {
                     if (values.isAnnotationPresent(JoinColumn.class)) {
 
+                        JoinColumn jc = values.getAnnotation(JoinColumn.class);
+                        OneToOne oto = values.getAnnotation(OneToOne.class);
+
+                        this.MapeaRelOneToOne(jc, oto, entidad);
+
+
 
                     }
-
                 }
             }
         }
 
     }
 
-    public Columna defirnirColumna(Field field,Columna columna) {
-      //  Columna columna = new Columna();
+    public Columna defirnirColumna(Field field, Columna columna) {
+        //  Columna columna = new Columna();
         Column column = field.getAnnotation(Column.class);
         if (column.name().compareToIgnoreCase("") == 0) {
             columna.setName(field.getName());
@@ -87,7 +96,6 @@ public class Analyzer {
             } else {
                 columna.setLob(false);
             }
-
         }
         if (field.isAnnotationPresent(Enumerated.class)) {
             getEnumeracion(field, columna);
@@ -117,7 +125,6 @@ public class Analyzer {
                 }
             }
         }
-
 
         if (column.nullable() == false) {
             columna.setNullable(false);
@@ -157,7 +164,19 @@ public class Analyzer {
 
     }
 
-    public void MapeaRelOneToOne() {
-    }
+    public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
 
+        OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
+
+        System.out.println("Relacion con: " + relacionNueva.getrelatedEntity()+ " (clase que posee la primary key)");
+        System.out.println("Llave primaria: " + relacionNueva.getPk());
+        System.out.println("Llave foranea(de la clase actual): " + relacionNueva.getMyForeignKey());
+
+        if (validations.validarRelacionOTO(relacionNueva) == true) {
+            System.out.println("Se encontro la clase relacionada.");
+            entidad.relations.listaOneToOne.add(relacionNueva);
+        } else {
+            System.out.println("No se encontro la clase relacionada.");
+        }
+    }
 }

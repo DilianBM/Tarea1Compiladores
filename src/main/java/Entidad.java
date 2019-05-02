@@ -1,3 +1,5 @@
+import Relaciones.Relaciones;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,6 +7,10 @@ public class Entidad {
     List<Columna> columns = new ArrayList<Columna>();
     Columna primaryKey;
     String nombTable;
+
+    Relaciones relations = new Relaciones();
+
+
 
     public void setNombTable(String nombreTable) {
         nombTable = nombreTable;
