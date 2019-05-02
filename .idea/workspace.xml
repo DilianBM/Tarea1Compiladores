@@ -2,45 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1fbd8d7-14a3-4e9d-bdaf-03123fe75738" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Analyzer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ClassReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Configuration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/FindCicles.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Relaciones/ManytoMany.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Relaciones/ManytoOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Relaciones/OnetoMany.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Relaciones/OnetoOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Relaciones/Relaciones.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ScriptGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/SentenceGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Structure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TablesCreatorBD.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Validations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/A.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/B.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClasesPrueba/B.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Columna.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Columna.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entidad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LectorRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RelOneToOne.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Relaciones.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SuperSuperClase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClasesPrueba/SuperSuperClase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Superclase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClasesPrueba/Superclase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/A.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/B.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Columna.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Columna.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Entidad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Entidad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LectorRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main$1Obj.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MyEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/RelOneToOne.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Relaciones.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SuperSuperClase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Superclase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Analyzer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Relaciones/RelOneToOne.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Validations.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -59,7 +24,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Structure.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -77,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Relaciones/OnetoMany.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
               <folding>
                 <element signature="e#123#124#0" expanded="true" />
                 <element signature="e#154#155#0" expanded="true" />
@@ -132,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Configuration.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -150,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/TablesCreatorBD.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="54" lean-forward="true" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
+              <caret line="4" column="54" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -239,6 +204,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Tarea1Compiladores" type="58d84e3e:PackageViewProjectNode" />
+              <item name="Tarea1Compiladores" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -263,18 +240,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Tarea1Compiladores" type="58d84e3e:PackageViewProjectNode" />
-              <item name="Tarea1Compiladores" type="616d4139:PackageViewModuleNode" />
             </path>
           </expand>
           <select />
@@ -332,7 +297,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25416037" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2579425" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -409,7 +374,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Entity.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/Columna.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Conexiones/JDBCBasePostgres.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -464,13 +428,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/A.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/A.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Conexiones/JDBCBaseMySQL.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -543,7 +501,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Structure.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -557,7 +515,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Relaciones/OnetoMany.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
           <folding>
             <element signature="e#123#124#0" expanded="true" />
             <element signature="e#154#155#0" expanded="true" />
@@ -568,6 +526,13 @@
             <element signature="e#376#377#0" expanded="true" />
             <element signature="e#426#427#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SentenceGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
@@ -595,7 +560,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Configuration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
@@ -606,17 +571,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SentenceGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TablesCreatorBD.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="54" lean-forward="true" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
+          <caret line="4" column="54" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
         </state>
       </provider>
     </entry>

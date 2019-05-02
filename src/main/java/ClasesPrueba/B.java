@@ -34,6 +34,12 @@ enum MyEnum {
 @Entity()
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class B {
+
+    String foreignKey;
+
+    @OneToOne(mappedBy = "C")
+    @JoinColumn(name = "primaryKey", referencedColumnName = "foreignKey")
+
     @Lob
     public String propiedad1;
     @Lob
@@ -46,4 +52,6 @@ public class B {
    MyEnum myEnum;
 
 
+    public static class C {
+    }
 }
