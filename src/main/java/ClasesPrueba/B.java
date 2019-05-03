@@ -33,7 +33,7 @@ enum MyEnum {
 @Table(name = "NOMBRE DE TABLA 2")
 @Entity()
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class B {
+public class B extends Superclase{
 
     String foreignKey;
 

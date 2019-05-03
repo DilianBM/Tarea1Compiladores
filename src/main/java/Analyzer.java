@@ -37,17 +37,13 @@ public class Analyzer {
             if (cl.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
                 clase = cl.getSuperclass();
                 MapeaSuperClass(clase, entidad);
-
             }
             if (cl.isAnnotationPresent(Inheritance.class)) {
-                MapeaHerencia(cl, entidad);
-
+                MapeaHerencia(cl);
             }
         } else {
             out.println("Annotations are not present...");
         }
-
-
     }
 
 
@@ -71,9 +67,6 @@ public class Analyzer {
                         OneToOne oto = values.getAnnotation(OneToOne.class);
 
                         this.MapeaRelOneToOne(jc, oto, entidad);
-
-
-
                     }
                 }
             }
@@ -160,7 +153,23 @@ public class Analyzer {
 
     }
 
-    public void MapeaHerencia(Class<?> cl, Entidad entidad) {
+    public void MapeaHerencia(Class<?> cl) {
+
+        Inheritance ih =cl.getAnnotation(Inheritance.class);
+
+        if(ih.strategy().toString() == "TABLE_PER_CLASS"){
+
+
+
+
+        } else {
+
+        }
+
+
+
+
+
 
     }
 

@@ -1,7 +1,9 @@
 package ClasesPrueba;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
 @MappedSuperclass
 public class SuperSuperClase {

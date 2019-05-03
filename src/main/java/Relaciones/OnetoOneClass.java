@@ -3,19 +3,19 @@ package Relaciones;
 public class OnetoOneClass {
 
     String relatedEntity;
-    String pk;
+    String relatedEntityPK;
     String myForeignKey;
 
     public OnetoOneClass(String a, String b, String c) {
 
         relatedEntity = a;
-        pk = b;
+        relatedEntityPK = b;
         myForeignKey = c;
 
     }
 
     public String getPk() {
-        return pk;
+        return relatedEntityPK;
     }
 
     public String getrelatedEntity() {

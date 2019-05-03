@@ -39,17 +39,14 @@ public class Validations {
 
                             Field[] fields = cl.getDeclaredFields();
                             for (Field values : fields) {
-                                Annotation[] anot = values.getAnnotations();
+                                if (values.isAnnotationPresent(Id.class)) {
 
-                                    if (values.isAnnotationPresent(Id.class)) {
+                                    return true;
 
-                                        return true;
-
-                                    } else {
-                                        System.out.println("Se encontro la clase pero no tiene ID");
-                                        return false;
-                                    }
-
+                                } else {
+                                    System.out.println("Se encontro la clase pero no tiene ID");
+                                    return false;
+                                }
                             }
                         }
                     }
