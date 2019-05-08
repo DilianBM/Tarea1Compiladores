@@ -16,9 +16,10 @@ import java.lang.*;
 
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException, IOException {
+    /*public static void main(String[] args) throws ClassNotFoundException, IOException {
         List<String> resul = new LinkedList<String>();
         Package[] packages = Package.getPackages();
+
         for (Package pack : packages) {
             resul.add(pack.getName());
             String scanPackage = pack.getName();
@@ -48,9 +49,8 @@ public class Main {
                     System.err.println("Got exception: " + e.getMessage());
                 }
             }
-            */
 
         }
-    }
+    }*/
 }
 

@@ -33,16 +33,12 @@ enum MyEnum {
 @Table(name = "NOMBRE DE TABLA 2")
 @Entity()
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-<<<<<<< HEAD
 public class B {
-=======
-public class B extends Superclase{
->>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
 
     String foreignKey;
 
     @OneToOne(mappedBy = "C")
-    @JoinColumn(name = "primaryKey", referencedColumnName = "foreignKey")
+    @JoinColumn()
 
     @Lob
     public String propiedad1;

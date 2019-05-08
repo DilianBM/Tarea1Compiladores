@@ -1,4 +1,9 @@
-import Relaciones.Relaciones;
+
+
+import Relaciones.ManytoManyClass;
+import Relaciones.ManytoOneClass;
+import Relaciones.OnetoManyClass;
+import Relaciones.OnetoOneClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +12,15 @@ public class Entidad {
     List<Columna> columns = new ArrayList<Columna>();
     Columna primaryKey;
     String nombTable;
+    public List<OnetoOneClass> listaOneToOne = new ArrayList<OnetoOneClass>();
+    public List<OnetoManyClass> ListaOneToMany;
+    public List<ManytoOneClass> listaManyToOne;
+    public List<ManytoManyClass> ListaManyToMany;
 
-    Relaciones relations = new Relaciones();
+    public List<OnetoOneClass> getLista1() {
 
-
+        return listaOneToOne;
+    }
 
     public void setNombTable(String nombreTable) {
         nombTable = nombreTable;
@@ -32,11 +42,16 @@ public class Entidad {
         return primaryKey;
     }
 
+    public List<Columna> getColumns() {
+        return columns;
+    }
+
+
     public String imprimecolumns() {
         String h = "";
         for (int i = 0; i < columns.size(); i++) {
 
-            h = h +" "+ columns.get(i).getName();
+            h = h + " " + columns.get(i).getName();
         }
         return h;
     }

@@ -1,21 +1,31 @@
 import Relaciones.OnetoOneClass;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
+import org.jgrapht.alg.CycleDetector;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-<<<<<<< HEAD
 import javax.persistence.Entity;
 import javax.persistence.Id;
-=======
-import javax.persistence.*;
->>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Validations {
+    DirectedGraph<String, DefaultEdge> g ;
+
+    public  Validations(){
+
+        g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+    }
+
     public void validadExistenciasPK(Entidad entidad) {
         if (entidad.getPrimaryKey() == null) {
             System.out.println("Error no existe PK para la entidad " + entidad.getNombTable());
@@ -41,25 +51,10 @@ public class Validations {
                     if (cl.isAnnotationPresent(Entity.class)) {
 
                         if (entidadRelacionada.equalsIgnoreCase(cl.getSimpleName())) {//valida que exista la clase relacionada
-<<<<<<< HEAD
-                            if(true){//aqui se puede implementar la validacion de que la PK coincida.
+                            if (true) {//aqui se puede implementar la validacion de que la PK coincida.
                                 return true;
                             }
 
-=======
-
-                            Field[] fields = cl.getDeclaredFields();
-                            for (Field values : fields) {
-                                if (values.isAnnotationPresent(Id.class)) {
-
-                                    return true;
-
-                                } else {
-                                    System.out.println("Se encontro la clase pero no tiene ID");
-                                    return false;
-                                }
-                            }
->>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
                         }
                     }
                 } catch (Exception ex) {
@@ -69,4 +64,37 @@ public class Validations {
         }
         return false;
     }
+
+
+
+    public Graph<String, DefaultEdge> getDirectedGraph(List<Entidad> entidads) {
+
+        for(int i=0;i<entidads.size();i++){
+            for (int j=0;j<entidads.get(i).listaOneToOne.size();j++){
+                g.addVertex(entidads.get(i).listaOneToOne.get(j).getrelatedEntity());
+            }
+            g.addVertex(entidads.get(i).nombTable);
+
+        }
+
+        return g;
+    }
+
+    public void whenCheckCycles_thenDetectCycles(Graph<String, DefaultEdge> gr) {
+        CycleDetector<String, DefaultEdge> cycleDetector
+                = new CycleDetector<String, DefaultEdge>(g);
+       boolean ciclo= cycleDetector.detectCycles();
+       if(ciclo){
+           System.out.println("SI hay ciclos");
+       }else{
+           System.out.println("NO hay ciclos");
+
+       }
+       // Set<String> cycleVertices = cycleDetector.findCycles();
+
+
+    }
+
+
+
 }

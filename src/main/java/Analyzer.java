@@ -1,6 +1,7 @@
 import Relaciones.OnetoOneClass;
 import Relaciones.Relaciones;
 
+import javax.persistence.ForeignKey;
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -11,15 +12,22 @@ import static java.lang.System.out;
 
 public class Analyzer {
     List<Entidad> ListaDeEntidades = new ArrayList<>();
+    IR ir = new IR();
     Validations validations = new Validations();
 
 
-    public void procesaEntidades(Class<?> cl) {
+    public void procesaEntidades(List<Class<?>> cl) {
         Entidad entidad = new Entidad();
-        ProcessClassAnnotations(cl, entidad);
-        ListaDeEntidades.add(entidad);
-        validations.validadExistenciasPK(entidad);
-        System.out.println(entidad.getNombTable() + " " + entidad.imprimecolumns());
+        for (int i = 0; i < cl.size(); i++) {
+            ProcessClassAnnotations(cl.get(i), entidad);
+            ListaDeEntidades.add(entidad);
+            ir.ListaDeEntidades.add(entidad);
+            validations.validadExistenciasPK(entidad);
+            validations.getDirectedGraph(ListaDeEntidades);
+           // System.out.println(entidad.getNombTable() + " " + entidad.imprimecolumns());
+        }
+
+
     }
 
     public void ProcessClassAnnotations(Class<?> cl, Entidad entidad) {
@@ -37,13 +45,27 @@ public class Analyzer {
             if (cl.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
                 clase = cl.getSuperclass();
                 MapeaSuperClass(clase, entidad);
+
             }
             if (cl.isAnnotationPresent(Inheritance.class)) {
-                MapeaHerencia(cl);
+                Entidad entidad1 = new Entidad();
+                Inheritance inheritance = cl.getAnnotation(Inheritance.class);
+                IR.EntidadesHerencia entidadHerencia = new IR.EntidadesHerencia();
+                entidadHerencia.setEstrategia(inheritance.strategy().name());
+                readMembers(cl, entidad1);
+                if (cl.isAnnotationPresent(DiscriminatorColumn.class)) {
+                    DiscriminatorColumn discriminatorColumn = cl.getAnnotation(DiscriminatorColumn.class);
+                    entidadHerencia.setDiscriminatorColumn(discriminatorColumn.name());
+                }
+            //    MapeaHerencia(cl, entidad1, entidadHerencia.getEstrategia());
+                entidadHerencia.setEntidad(entidad1);
+                ir.ListaDeEntidadesInheritance.add(entidadHerencia);
             }
         } else {
             out.println("Annotations are not present...");
         }
+
+
     }
 
 
@@ -62,20 +84,16 @@ public class Analyzer {
                 }
                 if (values.isAnnotationPresent(OneToOne.class)) {
                     if (values.isAnnotationPresent(JoinColumn.class)) {
-
                         JoinColumn jc = values.getAnnotation(JoinColumn.class);
                         OneToOne oto = values.getAnnotation(OneToOne.class);
-<<<<<<< HEAD
-
                         this.MapeaRelOneToOne(jc, oto, entidad);
 
 
-
-=======
-
-                        this.MapeaRelOneToOne(jc, oto, entidad);
->>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
                     }
+                }
+                if (values.isAnnotationPresent(OneToMany.class)) {
+
+
                 }
             }
         }
@@ -161,44 +179,27 @@ public class Analyzer {
 
     }
 
-    public void MapeaHerencia(Class<?> cl) {
-
-        Inheritance ih =cl.getAnnotation(Inheritance.class);
-
-        if(ih.strategy().toString() == "TABLE_PER_CLASS"){
-
-
-
-
-        } else {
-
+    public void MapeaHerencia(Class<?> cl, Entidad entidad, String estrategia) {
+       Entidad entidadTemp = new Entidad();
+        if (estrategia.compareToIgnoreCase("SINGLE_TABLE") == 0) {
+            while (cl.isAnnotationPresent(Inheritance.class) != true) {
+                readMembers(cl, entidadTemp);
+                cl = cl.getSuperclass();
+            }
         }
 
-
-
-
-
-
-<<<<<<< HEAD
-    public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
-
-        OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
-
-=======
     }
 
+
     public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
 
         OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
-
->>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
-        System.out.println("Relacion con: " + relacionNueva.getrelatedEntity()+ " (clase que posee la primary key)");
+        System.out.println("Relacion con: " + jc.columnDefinition() + " (clase que posee la primary key)");
         System.out.println("Llave primaria: " + relacionNueva.getPk());
         System.out.println("Llave foranea(de la clase actual): " + relacionNueva.getMyForeignKey());
-
         if (validations.validarRelacionOTO(relacionNueva) == true) {
             System.out.println("Se encontro la clase relacionada.");
-            entidad.relations.listaOneToOne.add(relacionNueva);
+            entidad.listaOneToOne.add(relacionNueva);
         } else {
             System.out.println("No se encontro la clase relacionada.");
         }
