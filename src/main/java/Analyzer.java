@@ -37,17 +37,13 @@ public class Analyzer {
             if (cl.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
                 clase = cl.getSuperclass();
                 MapeaSuperClass(clase, entidad);
-
             }
             if (cl.isAnnotationPresent(Inheritance.class)) {
-                MapeaHerencia(cl, entidad);
-
+                MapeaHerencia(cl);
             }
         } else {
             out.println("Annotations are not present...");
         }
-
-
     }
 
 
@@ -69,11 +65,16 @@ public class Analyzer {
 
                         JoinColumn jc = values.getAnnotation(JoinColumn.class);
                         OneToOne oto = values.getAnnotation(OneToOne.class);
+<<<<<<< HEAD
 
                         this.MapeaRelOneToOne(jc, oto, entidad);
 
 
 
+=======
+
+                        this.MapeaRelOneToOne(jc, oto, entidad);
+>>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
                     }
                 }
             }
@@ -160,14 +161,37 @@ public class Analyzer {
 
     }
 
-    public void MapeaHerencia(Class<?> cl, Entidad entidad) {
+    public void MapeaHerencia(Class<?> cl) {
 
+        Inheritance ih =cl.getAnnotation(Inheritance.class);
+
+        if(ih.strategy().toString() == "TABLE_PER_CLASS"){
+
+
+
+
+        } else {
+
+        }
+
+
+
+
+
+
+<<<<<<< HEAD
+    public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
+
+        OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
+
+=======
     }
 
     public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
 
         OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
 
+>>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
         System.out.println("Relacion con: " + relacionNueva.getrelatedEntity()+ " (clase que posee la primary key)");
         System.out.println("Llave primaria: " + relacionNueva.getPk());
         System.out.println("Llave foranea(de la clase actual): " + relacionNueva.getMyForeignKey());

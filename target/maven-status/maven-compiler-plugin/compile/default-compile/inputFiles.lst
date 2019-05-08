@@ -9,6 +9,7 @@ C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Conf
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\SentenceGenerator.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Structure.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClasesPrueba\SuperSuperClase.java
+<<<<<<< HEAD
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\ManytoMany.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClasesPrueba\Superclase.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\ManytoOne.java
@@ -18,6 +19,18 @@ C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Clas
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Columna.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\OnetoMany.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\OnetoOne.java
+=======
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\OnetoOneClass.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClasesPrueba\C.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClasesPrueba\Superclase.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Entidad.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\FindCicles.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\ManytoManyClass.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClasesPrueba\B.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\OnetoManyClass.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Columna.java
+C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Relaciones\ManytoOneClass.java
+>>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\ClassReader.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Validations.java
 C:\Users\teto\Desktop\ProyectoCompiladores\Tarea1Compiladores\src\main\java\Analyzer.java

@@ -3,8 +3,12 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
+<<<<<<< HEAD
 import javax.persistence.Entity;
 import javax.persistence.Id;
+=======
+import javax.persistence.*;
+>>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Iterator;
@@ -37,10 +41,25 @@ public class Validations {
                     if (cl.isAnnotationPresent(Entity.class)) {
 
                         if (entidadRelacionada.equalsIgnoreCase(cl.getSimpleName())) {//valida que exista la clase relacionada
+<<<<<<< HEAD
                             if(true){//aqui se puede implementar la validacion de que la PK coincida.
                                 return true;
                             }
 
+=======
+
+                            Field[] fields = cl.getDeclaredFields();
+                            for (Field values : fields) {
+                                if (values.isAnnotationPresent(Id.class)) {
+
+                                    return true;
+
+                                } else {
+                                    System.out.println("Se encontro la clase pero no tiene ID");
+                                    return false;
+                                }
+                            }
+>>>>>>> 94c87705ea5d82a15f845f7d7bc0b9aad9fa7fb5
                         }
                     }
                 } catch (Exception ex) {
