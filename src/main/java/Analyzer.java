@@ -354,7 +354,6 @@ public class Analyzer {
             } else {
                 columna.setNullable(true);
             }
-            System.out.println(columna.nombreTipo + " " + columna.getName());
             entidad.ListaOneToMany.add(relacionNueva);
             entidad.setColumns(columna);
 
