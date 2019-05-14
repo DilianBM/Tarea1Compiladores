@@ -3,7 +3,6 @@ import java.util.List;
 
 public class IR {
     List<Entidad> ListaDeEntidades = new ArrayList<>();
-    EntidadesHerencia entidadesHerencia =new EntidadesHerencia();
     List<EntidadesHerencia> ListaDeEntidadesInheritance = new ArrayList<>();
     static class EntidadesHerencia
     {

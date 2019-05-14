@@ -17,8 +17,11 @@ public class RelationalObjectMapper {
         for (Package pack : packages) {
             resul.add(pack.getName());
             String scanPackage = pack.getName();
-            analyzer.procesaEntidades(reader.proccesClass(scanPackage));
+            reader.proccesClass(scanPackage);
+
         }
+        analyzer.procesaEntidades(reader.getClases());
+
 
     }
 }

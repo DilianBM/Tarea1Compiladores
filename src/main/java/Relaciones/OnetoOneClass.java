@@ -1,31 +1,35 @@
 package Relaciones;
 
-public class OnetoOneClass {
-
-    String relatedEntity;
+public class OnetoOneClass extends Relaciones {
     String pk;
-    String myForeignKey;
+    String nameJoinColumn;
 
-    public OnetoOneClass(String a, String b, String c) {
 
-        relatedEntity = a;
+    public OnetoOneClass(String targetEnt, String b) {
+        targetEntity = targetEnt;
         pk = b;
-        myForeignKey = c;
+    }
+    public OnetoOneClass() {
+
 
     }
+
+
 
     public String getPk() {
         return pk;
     }
 
-    public String getrelatedEntity() {
-        return relatedEntity;
-
+    public String getNameJoinColumn() {
+        return nameJoinColumn;
     }
 
-    public String getMyForeignKey() {
+    public void setNameJoinColumn(String nameJoinColumn) {
+        this.nameJoinColumn = nameJoinColumn;
+    }
 
-        return myForeignKey;
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 
 }

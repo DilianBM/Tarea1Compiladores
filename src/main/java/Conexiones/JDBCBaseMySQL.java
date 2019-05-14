@@ -3,18 +3,20 @@ package Conexiones;
 import javax.swing.*;
 import java.sql.*;
 
-public class JDBCBaseMySQL {
-    String url;
-    String user;
-    String password;
-    String BD;
-    Connection c;
+public class JDBCBaseMySQL extends ConfigurationJDBCConection{
+
+
 
     public JDBCBaseMySQL() {
-        try {
 
+    }
+
+    @Override
+    public void createConection() {
+        try {
+            Connection c;
             Class.forName("com.mysql.jdbc.Driver");
-            c = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1?autoReconnect=true&amp;useSSL=false&allowPublicKeyRetrieval=true", "root", "Ian24/02/95");//Crea la conexión con la BD
+            c = DriverManager.getConnection(getURL()+"?autoReconnect=true&amp;useSSL=false&allowPublicKeyRetrieval=true", getUser(), getPassword());//Crea la conexión con la BD
             System.out.println("Conexión realizada");
 
         } catch (ClassNotFoundException e) {
@@ -33,11 +35,5 @@ public class JDBCBaseMySQL {
             }
 
         }
-    }
-
-    public void setAtributes(String URL, String usuario, String contraseña) {
-        url = URL;
-        user = usuario;
-        password = contraseña;
     }
 }

@@ -1,5 +1,6 @@
 import Relaciones.OnetoOneClass;
 import Relaciones.Relaciones;
+import Relaciones.OnetoManyClass;
 
 import javax.persistence.ForeignKey;
 import javax.persistence.*;
@@ -11,21 +12,24 @@ import java.util.List;
 import static java.lang.System.out;
 
 public class Analyzer {
-    List<Entidad> ListaDeEntidades = new ArrayList<>();
+    //List<Entidad> ListaDeEntidades = new ArrayList<>();
     IR ir = new IR();
     Validations validations = new Validations();
-
+    List<Class<?>> cls = new ArrayList<>();
 
     public void procesaEntidades(List<Class<?>> cl) {
-        Entidad entidad = new Entidad();
+        cls = cl;
         for (int i = 0; i < cl.size(); i++) {
+            Entidad entidad = new Entidad();
             ProcessClassAnnotations(cl.get(i), entidad);
-            ListaDeEntidades.add(entidad);
+            // ListaDeEntidades.add(entidad);
             ir.ListaDeEntidades.add(entidad);
-            validations.validadExistenciasPK(entidad);
-            validations.getDirectedGraph(ListaDeEntidades);
-           // System.out.println(entidad.getNombTable() + " " + entidad.imprimecolumns());
+
+            validations.getDirectedGraph(ir.ListaDeEntidades);
+            System.out.println("Nombre de Entidad: " + entidad.getNombTable() + "  " + entidad.imprimecolumns() + "\n");
         }
+
+        validations.validadExistenciasPK(ir.ListaDeEntidades);
 
 
     }
@@ -57,7 +61,6 @@ public class Analyzer {
                     DiscriminatorColumn discriminatorColumn = cl.getAnnotation(DiscriminatorColumn.class);
                     entidadHerencia.setDiscriminatorColumn(discriminatorColumn.name());
                 }
-            //    MapeaHerencia(cl, entidad1, entidadHerencia.getEstrategia());
                 entidadHerencia.setEntidad(entidad1);
                 ir.ListaDeEntidadesInheritance.add(entidadHerencia);
             }
@@ -74,34 +77,33 @@ public class Analyzer {
         for (Field values : fields) {
             Annotation[] anot = values.getAnnotations();
             if (anot.length != 0) {
-                if (values.isAnnotationPresent(Column.class)) {
-                    Columna columna = new Columna();
+                Columna columna = new Columna();
+                values.setAccessible(true);
+                if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToOne.class) != true && values.isAnnotationPresent(OneToMany.class) != true && values.isAnnotationPresent(ManyToOne.class) != true && values.isAnnotationPresent(ManyToMany.class) != true) {
+
                     columna = defirnirColumna(values, columna);
                     entidad.setColumns(columna);
                     if (values.isAnnotationPresent(Id.class)) {
                         entidad.setPrimaryKey(columna);
-                    }
-                }
-                if (values.isAnnotationPresent(OneToOne.class)) {
-                    if (values.isAnnotationPresent(JoinColumn.class)) {
-                        JoinColumn jc = values.getAnnotation(JoinColumn.class);
-                        OneToOne oto = values.getAnnotation(OneToOne.class);
-                        this.MapeaRelOneToOne(jc, oto, entidad);
-
 
                     }
-                }
-                if (values.isAnnotationPresent(OneToMany.class)) {
 
 
                 }
+                if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToOne.class) == true) {
+                    this.MapeaOneToOne(entidad, values, columna);
+                }
+                if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToMany.class) == true) {
+                    Columna columna1 = new Columna();
+                    this.MapeaOneToMany(entidad, values, columna1);
+                }
+
             }
         }
 
     }
 
     public Columna defirnirColumna(Field field, Columna columna) {
-        //  Columna columna = new Columna();
         Column column = field.getAnnotation(Column.class);
         if (column.name().compareToIgnoreCase("") == 0) {
             columna.setName(field.getName());
@@ -180,7 +182,7 @@ public class Analyzer {
     }
 
     public void MapeaHerencia(Class<?> cl, Entidad entidad, String estrategia) {
-       Entidad entidadTemp = new Entidad();
+        Entidad entidadTemp = new Entidad();
         if (estrategia.compareToIgnoreCase("SINGLE_TABLE") == 0) {
             while (cl.isAnnotationPresent(Inheritance.class) != true) {
                 readMembers(cl, entidadTemp);
@@ -191,17 +193,175 @@ public class Analyzer {
     }
 
 
-    public void MapeaRelOneToOne(JoinColumn jc, OneToOne oto, Entidad entidad) {
+    public void MapeaOneToOne(Entidad entidad, Field values, Columna columna) {
+        OneToOne oto = values.getAnnotation(OneToOne.class);
+        OnetoOneClass relacionNueva = new OnetoOneClass();
+        boolean esdueña = false;
+        if (values.isAnnotationPresent(JoinColumn.class)) {
+            JoinColumn jc = values.getAnnotation(JoinColumn.class);
+            relacionNueva.setNameJoinColumn(jc.name());
 
-        OnetoOneClass relacionNueva = new OnetoOneClass(oto.mappedBy(), jc.name(), jc.referencedColumnName());
-        System.out.println("Relacion con: " + jc.columnDefinition() + " (clase que posee la primary key)");
-        System.out.println("Llave primaria: " + relacionNueva.getPk());
-        System.out.println("Llave foranea(de la clase actual): " + relacionNueva.getMyForeignKey());
-        if (validations.validarRelacionOTO(relacionNueva) == true) {
-            System.out.println("Se encontro la clase relacionada.");
-            entidad.listaOneToOne.add(relacionNueva);
+            esdueña = true;
+
         } else {
-            System.out.println("No se encontro la clase relacionada.");
+            relacionNueva.setNameJoinColumn(values.getName() + "_id");
         }
+
+        String prue = values.getType().getSimpleName();
+        String vect[] = new String[5];
+        vect = validations.validarRelacionOTO(relacionNueva, prue, cls);
+        if (!values.isAnnotationPresent(JoinColumn.class)) {
+            if (vect[4].compareToIgnoreCase(oto.mappedBy()) != 0) {
+                System.out.println("Error en el MappedBy tiene que nombrarlo" + vect[4]);
+            }
+        }
+
+
+        if (vect[0].compareToIgnoreCase("true") == 0 && esdueña) {
+
+            relacionNueva.setTargetEntity(vect[1]);
+            relacionNueva.setPk(vect[2]);
+            columna.setName(relacionNueva.getNameJoinColumn());
+            if (values.isAnnotationPresent(Lob.class)) {
+                if (values.getType().getSimpleName().compareToIgnoreCase("String") == 0) {
+                    columna.setLob(true);
+                } else {
+                    columna.setLob(false);
+                }
+            }
+            if (values.isAnnotationPresent(Enumerated.class)) {
+                getEnumeracion(values, columna);
+
+            }
+            Column column = values.getAnnotation(Column.class);
+
+            if (vect[3].compareToIgnoreCase("String") == 0) {
+                columna.setNombreTipo("VARCHAR ()");
+            } else {
+                if (vect[3].compareToIgnoreCase("int") == 0) {
+                    columna.setNombreTipo("INT");
+                } else {
+                    if (vect[3].compareToIgnoreCase("float") == 0) {
+                        columna.setNombreTipo("FLOAT");
+                        columna.setPrecision(column.precision());
+                        columna.setScale(column.scale());
+                    } else {
+                        if (vect[3].compareToIgnoreCase("Double") == 0) {
+                            columna.setNombreTipo("DOUBLE");
+                            columna.setPrecision(column.precision());
+                            columna.setScale(column.scale());
+
+                        } else {
+                            if (vect[3].compareToIgnoreCase("Boolean") == 0) {
+                                columna.setNombreTipo("BOOLEAN");
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (column.nullable() == false) {
+                columna.setNullable(false);
+            } else {
+                columna.setNullable(true);
+            }
+            entidad.listaOneToOne.add(relacionNueva);
+            entidad.setColumns(columna);
+
+
+        } else {
+            //System.out.println("No se encontro la clase relacionada.");
+        }
+
+
+    }
+
+    public void MapeaOneToMany(Entidad entidad, Field values, Columna columna) {
+        OneToMany otm = values.getAnnotation(OneToMany.class);
+        OnetoManyClass relacionNueva = new OnetoManyClass();
+        boolean esdueña = false;
+        if (values.isAnnotationPresent(JoinColumn.class)) {
+            JoinColumn jc = values.getAnnotation(JoinColumn.class);
+            if (jc.name().compareToIgnoreCase("") != 0) {
+                relacionNueva.setNameJoinColumn(jc.name());
+            } else {
+                relacionNueva.setNameJoinColumn(values.getName() + "_id");
+            }
+
+            esdueña = true;
+
+        } else {
+            relacionNueva.setNameJoinColumn(values.getName() + "_id");
+        }
+
+        String prue = values.getType().getSimpleName();
+        String vect[] = new String[5];
+        vect = validations.validarRelacionOTM(relacionNueva, prue, cls);
+
+        if (!values.isAnnotationPresent(JoinColumn.class)) {
+            if (vect[4].compareToIgnoreCase(otm.mappedBy()) != 0) {
+                System.out.println("Error en el MappedBy tiene que nombrarlo" + vect[4]);
+            }
+        }
+
+
+        if (vect[0].compareToIgnoreCase("true") == 0 && esdueña) {
+
+            relacionNueva.setTargetEntity(vect[1]);
+            relacionNueva.setPk(vect[2]);
+            columna.setName(relacionNueva.getNameJoinColumn());
+            if (values.isAnnotationPresent(Lob.class)) {
+                if (values.getType().getSimpleName().compareToIgnoreCase("String") == 0) {
+                    columna.setLob(true);
+                } else {
+                    columna.setLob(false);
+                }
+            }
+            if (values.isAnnotationPresent(Enumerated.class)) {
+                getEnumeracion(values, columna);
+
+            }
+            Column column = values.getAnnotation(Column.class);
+            if (vect[3].compareToIgnoreCase("String") == 0) {
+                columna.setNombreTipo("VARCHAR ()");
+
+            } else {
+                if (vect[3].compareToIgnoreCase("int") == 0) {
+                    columna.setNombreTipo("INT");
+                } else {
+                    if (vect[3].compareToIgnoreCase("float") == 0) {
+                        columna.setNombreTipo("FLOAT");
+                        columna.setPrecision(column.precision());
+                        columna.setScale(column.scale());
+                    } else {
+                        if (vect[3].compareToIgnoreCase("Double") == 0) {
+                            columna.setNombreTipo("DOUBLE");
+                            columna.setPrecision(column.precision());
+                            columna.setScale(column.scale());
+
+                        } else {
+                            if (vect[3].compareToIgnoreCase("Boolean") == 0) {
+                                columna.setNombreTipo("BOOLEAN");
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            if (column.nullable() == false) {
+                columna.setNullable(false);
+            } else {
+                columna.setNullable(true);
+            }
+            System.out.println(columna.nombreTipo + " " + columna.getName());
+            entidad.ListaOneToMany.add(relacionNueva);
+            entidad.setColumns(columna);
+
+        } else {
+            //System.out.println("No se encontro la clase relacionada.");
+        }
+
+
     }
 }

@@ -1,21 +1,22 @@
 package Relaciones;
-public class OnetoManyClass {
-String mappedBy="";
-String relatedEntity="";
 
-    public String getMappedBy() {
-        return mappedBy;
+public class OnetoManyClass extends Relaciones {
+    String nameJoinColumn="";
+    String pk="";
+
+    public String getPk() {
+        return pk;
     }
 
-    public String getRelatedEntity() {
-        return relatedEntity;
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 
-    public void setMappedBy(String mappedBy) {
-        this.mappedBy = mappedBy;
+    public String getNameJoinColumn() {
+        return nameJoinColumn;
     }
 
-    public void setRelatedEntity(String relatedEntity) {
-        this.relatedEntity = relatedEntity;
+    public void setNameJoinColumn(String nameJoinColumn) {
+        this.nameJoinColumn = nameJoinColumn;
     }
 }

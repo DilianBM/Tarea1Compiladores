@@ -10,16 +10,20 @@ import java.util.List;
 
 public class Entidad {
     List<Columna> columns = new ArrayList<Columna>();
-    Columna primaryKey;
+    Columna primaryKey=null;
     String nombTable;
     public List<OnetoOneClass> listaOneToOne = new ArrayList<OnetoOneClass>();
-    public List<OnetoManyClass> ListaOneToMany;
+    public List<OnetoManyClass> ListaOneToMany=new ArrayList<>();
     public List<ManytoOneClass> listaManyToOne;
     public List<ManytoManyClass> ListaManyToMany;
 
     public List<OnetoOneClass> getLista1() {
 
         return listaOneToOne;
+    }
+    public List<OnetoManyClass> getListaOneToMany() {
+
+        return ListaOneToMany;
     }
 
     public void setNombTable(String nombreTable) {
@@ -51,7 +55,8 @@ public class Entidad {
         String h = "";
         for (int i = 0; i < columns.size(); i++) {
 
-            h = h + " " + columns.get(i).getName();
+            h = h + " NomColumna " + columns.get(i).getName()+" NomTipo "+columns.get(i).getNombreTipo()+"\n";
+
         }
         return h;
     }

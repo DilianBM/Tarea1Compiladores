@@ -12,9 +12,14 @@ import static java.lang.System.out;
 
 public class ClassReader {
     Analyzer analyzer = new Analyzer();
+    List<Class<?>> clases = new ArrayList<>();
 
-    public List<Class<?>> proccesClass(String Package) {
-        List<Class<?>> clases = new ArrayList<>();
+    public List<Class<?>> getClases() {
+        return clases;
+    }
+
+    public void proccesClass(String Package) {
+
         String scanPackage = Package;
         ClassPathScanningCandidateComponentProvider provide = new ClassPathScanningCandidateComponentProvider(false);
         provide.addIncludeFilter(new AnnotationTypeFilter((Class<? extends Annotation>) Entity.class));
@@ -31,6 +36,6 @@ public class ClassReader {
             }
         }
 
-        return clases;
+
     }
 }
