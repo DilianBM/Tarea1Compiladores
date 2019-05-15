@@ -1,6 +1,6 @@
 package Relaciones;
 
-public class ManytoOneClass {
+public class ManytoOneClass extends Relaciones{
     String nameJoinColumn;
     String pk;
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Relaciones {
 
-    String targetEntity = "";
+    String targetEntity = "";//jalar el nombre del field
     String mappedBy = "";
 
     public void setTargetEntity(String targetEntity) {

@@ -36,6 +36,7 @@ public class Validations {
 
     }
 
+
     public String[] validarRelacionOTO(OnetoOneClass c, String entidadRel, List<Class<?>> cls) {
         String vect[] = new String[5];
         String entidadRelacionada = entidadRel;
@@ -70,8 +71,8 @@ public class Validations {
                                 vect[3] = values.getType().getSimpleName();
 
                             }
-                            if(values.isAnnotationPresent(OneToOne.class)){
-                               vect[4]=values.getName();
+                            if (values.isAnnotationPresent(OneToOne.class)) {
+                                vect[4] = values.getName();
 
                             }
                         }
@@ -98,6 +99,7 @@ public class Validations {
         return vect;
     }
 
+
     public String[] validarRelacionOTM(OnetoManyClass c, String entidadRel, List<Class<?>> cls) {
         String vect[] = new String[5];
         String entidadRelacionada = entidadRel;
@@ -114,7 +116,6 @@ public class Validations {
                             } else {
                                 vect[1] = cl.getSimpleName();
 
-
                             }
                         }
 
@@ -125,13 +126,13 @@ public class Validations {
                                 vect[3] = values.getType().getSimpleName();
 
                             }
-                            if(values.isAnnotationPresent(OneToMany.class)){
-                                vect[4]=values.getName();
-
+                            if (values.isAnnotationPresent(OneToMany.class)) {
+                                vect[4] = values.getName();
                             }
                         }
 
                         return vect;
+
                     } else {
 
                         vect[0] = "false";
@@ -143,9 +144,53 @@ public class Validations {
         }
 
 
+        return vect;
+    }
+
+
+    public String[] validarRelacionMTO(String nombreTargetEntity, List<Class<?>> cls) {
+        String vect[] = new String[4]; //i=1 existe, i=2 nombre de la tabla, i=3 nombre de la pk, i=4 tipo de la pk
+        vect[0] = "false";
+        for (int i = 0; i < cls.size(); i++) {
+            try {
+                Class<?> cl = cls.get(i);
+                if (cl.isAnnotationPresent(Entity.class)) {
+                    if (nombreTargetEntity.equalsIgnoreCase(cl.getSimpleName())) {//valida que exista la clase relacionada
+
+                       // System.out.println("Encontro la entidad " + nombreTargetEntity);
+
+                        vect[0] = "true";
+
+                        if (cl.isAnnotationPresent(Table.class)) {
+                            Table tabla = cl.getAnnotation(Table.class);
+                            vect[1] = tabla.name();
+
+                        } else {
+                            vect[1] = cl.getSimpleName();
+                        }
+
+
+                        Field[] fields = cl.getDeclaredFields();
+                        for (Field values : fields) {
+                            if (values.isAnnotationPresent(Id.class)) {
+                                vect[2] = values.getName();
+                                vect[3] = values.getType().getSimpleName();
+
+                            }
+                        }
+
+
+                        return vect;
+                    }
+                }
+            } catch (Exception ex) {
+                System.err.println("Got exception: " + ex.getMessage());
+            }
+        }
 
         return vect;
     }
+
 
     public Graph<String, DefaultEdge> getDirectedGraph(List<Entidad> entidads) {
 

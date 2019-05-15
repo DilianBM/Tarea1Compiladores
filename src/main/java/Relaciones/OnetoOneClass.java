@@ -11,10 +11,7 @@ public class OnetoOneClass extends Relaciones {
     }
     public OnetoOneClass() {
 
-
     }
-
-
 
     public String getPk() {
         return pk;

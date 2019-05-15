@@ -14,7 +14,7 @@ public class Entidad {
     String nombTable;
     public List<OnetoOneClass> listaOneToOne = new ArrayList<OnetoOneClass>();
     public List<OnetoManyClass> ListaOneToMany=new ArrayList<>();
-    public List<ManytoOneClass> listaManyToOne;
+    public List<ManytoOneClass> listaManyToOne = new ArrayList<>();
     public List<ManytoManyClass> ListaManyToMany;
 
     public List<OnetoOneClass> getLista1() {
@@ -53,13 +53,12 @@ public class Entidad {
 
     public String imprimecolumns() {
         String h = "";
+
         for (int i = 0; i < columns.size(); i++) {
 
-            h = h + " NomColumna " + columns.get(i).getName()+" NomTipo "+columns.get(i).getNombreTipo()+"\n";
-
+            h = h + "NomColumna " + columns.get(i).getName()+" NomTipo "+columns.get(i).getNombreTipo()+"\n";
         }
+
         return h;
     }
-
-
 }
