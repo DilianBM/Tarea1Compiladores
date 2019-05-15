@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@Table (name = "TABLA DE PRUEBA")
 public class C {
 
     @Id
@@ -17,7 +16,7 @@ public class C {
 
     @Column
     @OneToMany()
-    @JoinColumn(name = "InstB")
+    @JoinColumn()
     public B GInstanciaB;
 
     @Column

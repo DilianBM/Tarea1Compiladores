@@ -6,7 +6,7 @@ import java.util.Map;
 
 @Entity()
 @Table(name = "NOMBRE DE TABLA 2")
-public class B  {
+public class B extends C {
     @Id
     @Column
     String llave;

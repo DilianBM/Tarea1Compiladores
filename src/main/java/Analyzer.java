@@ -1,3 +1,4 @@
+import ClasesPrueba.C;
 import Relaciones.OnetoOneClass;
 import Relaciones.Relaciones;
 import Relaciones.OnetoManyClass;
@@ -40,27 +41,41 @@ public class Analyzer {
             if (cl.isAnnotationPresent(Table.class)) {
                 Table tabla = cl.getAnnotation(Table.class);
                 entidad.setNombTable(tabla.name());
-                readMembers(cl, entidad);
+                if(!cl.isAnnotationPresent(Inheritance.class)){
+                readMembers(cl, entidad);}
             } else {
                 entidad.setNombTable(cl.getSimpleName());
-                readMembers(cl, entidad);
+                if(!cl.isAnnotationPresent(Inheritance.class)){
+                    readMembers(cl, entidad);}
             }
             if (cl.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
                 clase = cl.getSuperclass();
                 MapeaSuperClass(clase, entidad);
             }
             if (cl.isAnnotationPresent(Inheritance.class)) {
-                Entidad entidad1 = new Entidad();
+
                 Inheritance inheritance = cl.getAnnotation(Inheritance.class);
-                IR.EntidadesHerencia entidadHerencia = new IR.EntidadesHerencia();
+                EntidadHerencia entidadHerencia = new EntidadHerencia();
+                entidadHerencia.entidad = new Entidad();
+                if (cl.isAnnotationPresent(Table.class)) {
+                    Table tabla = clase.getAnnotation(Table.class);
+                    entidadHerencia.entidad.setNombTable(tabla.name());
+                } else {
+                    entidadHerencia.entidad.setNombTable(cl.getSimpleName());
+
+                }
                 entidadHerencia.setEstrategia(inheritance.strategy().name());
-                readMembers(cl, entidad1);
+                readMembers(cl, entidadHerencia.entidad);
+
                 if (cl.isAnnotationPresent(DiscriminatorColumn.class)) {
                     DiscriminatorColumn discriminatorColumn = cl.getAnnotation(DiscriminatorColumn.class);
                     entidadHerencia.setDiscriminatorColumn(discriminatorColumn.name());
                 }
-                entidadHerencia.setEntidad(entidad1);
+                entidadHerencia.setEntidad(entidadHerencia.entidad);
                 ir.ListaDeEntidadesInheritance.add(entidadHerencia);
+
+                mapeaHerencia(cls, cl.getSimpleName(), entidadHerencia);
+
             }
         } else {
             out.println("Annotations are not present...");
@@ -177,14 +192,35 @@ public class Analyzer {
 
     }
 
-    public void MapeaHerencia(Class<?> cl, Entidad entidad, String estrategia) {
-        Entidad entidadTemp = new Entidad();
-        if (estrategia.compareToIgnoreCase("SINGLE_TABLE") == 0) {
-            while (cl.isAnnotationPresent(Inheritance.class) != true) {
-                readMembers(cl, entidadTemp);
-                cl = cl.getSuperclass();
+    public void mapeaHerencia(List<Class<?>> cl, String nomEntidad, EntidadHerencia entidadesHerencia) {
+        List<Entidad> listtmp = new ArrayList<>();
+        Class<?> clase = null;
+        for (int i = 0; i < cl.size(); i++) {
+            Entidad entidadTemp = new Entidad();
+            clase = cl.get(i);
+
+            if (!clase.isAnnotationPresent(Inheritance.class)) {
+                while (!clase.isAnnotationPresent(Inheritance.class) && clase.getSimpleName().compareToIgnoreCase("Object") != 0) {
+                    if (clase.isAnnotationPresent(Table.class)) {
+                        Table tabla = clase.getAnnotation(Table.class);
+                        entidadTemp.setNombTable(tabla.name());
+                    }
+                    readMembers(clase, entidadTemp);
+                    listtmp.add(entidadTemp);
+
+                    clase = clase.getSuperclass();
+                }
+            }
+            if (nomEntidad.compareToIgnoreCase(clase.getSimpleName()) != 0) {
+                listtmp.clear();
             }
         }
+        System.out.println("Padre " + nomEntidad);
+        for (int i = 0; i < listtmp.size(); i++) {
+            System.out.println("herencia " + listtmp.get(i).getNombTable());
+        }
+
+        ir.entidadesconherencia.put(entidadesHerencia, listtmp);
     }
 
     public void MapeaOneToOne(Entidad entidad, Field values, Columna columna) {
@@ -288,9 +324,12 @@ public class Analyzer {
         vect = validations.validarRelacionOTM(relacionNueva, prue, cls);
 
         if (!values.isAnnotationPresent(JoinColumn.class)) {
-            if (vect[4].compareToIgnoreCase(otm.mappedBy()) != 0) {
-                System.out.println("Error en el MappedBy tiene que nombrarlo" + vect[4]);
+            if (vect[4] != null) {
+                if (vect[4].compareToIgnoreCase(otm.mappedBy()) != 0) {
+                    System.out.println("Error en el MappedBy tiene que nombrarlo" + vect[4]);
+                }
             }
+
         }
 
 

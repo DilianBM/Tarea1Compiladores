@@ -1,38 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.*;
+import java.util.Map;
 public class IR {
     List<Entidad> ListaDeEntidades = new ArrayList<>();
-    List<EntidadesHerencia> ListaDeEntidadesInheritance = new ArrayList<>();
-    static class EntidadesHerencia
-    {
-        public Entidad entidad=new Entidad();
-        public String DiscriminatorColumn="";
-        public String estrategia="";
+    List<EntidadHerencia> ListaDeEntidadesInheritance = new ArrayList<>();
+        Map<EntidadHerencia,List<Entidad>> entidadesconherencia=new HashMap<EntidadHerencia, List<Entidad>>();
 
-        public Entidad getEntidad() {
-            return entidad;
-        }
-
-        public String getDiscriminatorColumn() {
-            return DiscriminatorColumn;
-        }
-
-        public String getEstrategia() {
-            return estrategia;
-        }
-
-        public void setDiscriminatorColumn(String discriminatorColumn) {
-            DiscriminatorColumn = discriminatorColumn;
-        }
-
-        public void setEntidad(Entidad entidad) {
-            this.entidad = entidad;
-        }
-
-        public void setEstrategia(String estrategia) {
-            this.estrategia = estrategia;
-        }
-    };
 
 }
