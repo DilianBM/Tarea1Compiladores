@@ -4,11 +4,11 @@ public class OnetoOneClass extends Relaciones {
     String pk;
     String nameJoinColumn;
 
-
     public OnetoOneClass(String targetEnt, String b) {
         targetEntity = targetEnt;
         pk = b;
     }
+
     public OnetoOneClass() {
 
     }

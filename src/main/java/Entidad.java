@@ -15,7 +15,7 @@ public class Entidad {
     public List<OnetoOneClass> listaOneToOne = new ArrayList<OnetoOneClass>();
     public List<OnetoManyClass> ListaOneToMany=new ArrayList<>();
     public List<ManytoOneClass> listaManyToOne = new ArrayList<>();
-    public List<ManytoManyClass> ListaManyToMany;
+    public List<ManytoManyClass> ListaManyToMany=new ArrayList<>();
 
     public List<OnetoOneClass> getLista1() {
 
@@ -24,6 +24,10 @@ public class Entidad {
     public List<OnetoManyClass> getListaOneToMany() {
 
         return ListaOneToMany;
+    }
+
+    public List<ManytoOneClass> getListaManyToOne() {
+        return listaManyToOne;
     }
 
     public void setNombTable(String nombreTable) {
@@ -58,6 +62,13 @@ public class Entidad {
 
             h = h + "NomColumna " + columns.get(i).getName()+" NomTipo "+columns.get(i).getNombreTipo()+"\n";
         }
+
+        return h;
+    }
+
+    public String RelacionesOTO() {
+        String h = "";
+
 
         return h;
     }

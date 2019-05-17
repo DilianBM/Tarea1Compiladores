@@ -157,7 +157,7 @@ public class Validations {
                 if (cl.isAnnotationPresent(Entity.class)) {
                     if (nombreTargetEntity.equalsIgnoreCase(cl.getSimpleName())) {//valida que exista la clase relacionada
 
-                       // System.out.println("Encontro la entidad " + nombreTargetEntity);
+                        // System.out.println("Encontro la entidad " + nombreTargetEntity);
 
                         vect[0] = "true";
 
@@ -195,12 +195,26 @@ public class Validations {
     public Graph<String, DefaultEdge> getDirectedGraph(List<Entidad> entidads) {
 
         for (int i = 0; i < entidads.size(); i++) {
-            for (int j = 0; j < entidads.get(i).listaOneToOne.size(); j++) {
-                g.addVertex(entidads.get(i).listaOneToOne.get(j).getTargetEntity());
-            }
             g.addVertex(entidads.get(i).nombTable);
+            System.out.println(entidads.get(i).getNombTable());
 
         }
+        for (int i = 0; i < entidads.size(); i++) {
+
+            for (int j = 0; j < entidads.get(i).listaOneToOne.size(); j++) {
+                g.addEdge(entidads.get(i).nombTable, entidads.get(i).getLista1().get(j).getTargetEntity());
+                System.out.println("aristas: " + entidads.get(i).getLista1().size());
+            }
+            for (int j = 0; j < entidads.get(i).getListaOneToMany().size(); j++) {
+
+                g.addEdge(entidads.get(i).nombTable, entidads.get(i).getListaOneToMany().get(j).getTargetEntity());
+            }
+            for (int j = 0; j < entidads.get(i).listaManyToOne.size(); j++) {
+                g.addEdge(entidads.get(i).nombTable, entidads.get(i).listaManyToOne.get(j).getTargetEntity());
+
+            }
+        }
+
 
         return g;
     }

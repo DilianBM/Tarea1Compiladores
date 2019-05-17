@@ -3,14 +3,15 @@ package ClasesPrueba;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 public class C {
 
     @Id
     @Column
     String primaryKey;
 
-    @OneToOne(mappedBy = "cPequeño")
+    @OneToOne()
+    @JoinColumn()
     @Column
     public B instanciaB;
 

@@ -2,13 +2,12 @@ package ClasesPrueba;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "A")
-public class A extends C{
-    @Id
+
+public class F extends E{
+
     @Column
-    public int basura;
+    String valor;
 }
