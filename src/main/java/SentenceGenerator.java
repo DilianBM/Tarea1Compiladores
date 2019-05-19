@@ -1,13 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class SentenceGenerator {
-    List<String> sentencesMySQL;
-    List<String> sentencesPostgres;
+public abstract class SentenceGenerator {
+    public abstract List<String> generateSentences(List<Entidad> entidades);
 
-    public void generateSentencesMySQL(List<Entidad> entidad) {
-    }
-
-    public void generateSentencesPostgres(List<Entidad> entidad) {
-    }
 
 }

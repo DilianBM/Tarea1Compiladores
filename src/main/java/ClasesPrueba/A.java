@@ -10,5 +10,5 @@ import javax.persistence.Table;
 public class A extends C{
     @Id
     @Column
-    public int basura;
+    public boolean basura;
 }

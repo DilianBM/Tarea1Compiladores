@@ -6,12 +6,12 @@ import java.util.Map;
 
 @Entity()
 @Table(name = "NOMBRE DE TABLA 2")
-public class B extends C {
+public class B  {
     @Id
     @Column
     String llave;
 
-    @Column
+    @Column(length = 244)
     private String variable;
 
     @Column
@@ -25,7 +25,7 @@ public class B extends C {
 
     @Lob
     @Column(name = "PropiedadNum2", nullable = true)
-    public String propiedad2;
+    public Float propiedad2;
 
  //   @Enumerated(value = EnumType.STRING)
 

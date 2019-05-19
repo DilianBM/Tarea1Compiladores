@@ -3,34 +3,26 @@ package ClasesPrueba;
 import javax.persistence.*;
 
 @Entity
-
 public class C {
 
     @Id
-    @Column
-    String primaryKey;
+    @Column(length = 244)
+    String primaryK;
 
-    @OneToOne()
-    @JoinColumn()
-    @Column
-    public B instanciaB;
 
-    @Column
+
+    @Column(length = 45)
     @OneToMany()
     @JoinColumn()
     public B GInstanciaB;
 
     @Column
     @ManyToOne
-   @JoinColumn(name = "B_id")
+    @JoinColumn(name = "B_id")
     public B InstanciaB2;
 
 
-    public void setPrimaryKey(String primaryKey) {
-        this.primaryKey = primaryKey;
-    }
 
-    public String getPrimaryKey() {
-        return primaryKey;
-    }
+
+
 }

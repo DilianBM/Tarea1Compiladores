@@ -148,6 +148,46 @@ public class Validations {
     }
 
 
+    public String[] validarRelacionMTM(String nombreTargetEntity, List<Class<?>> cls) {
+        String vect[] = new String[4]; //i=0 existe, i=1 nombre de la tabla, i=2 nombre de la pk, i=3 tipo de la pk
+        vect[0] = "false";
+        for (int i = 0; i < cls.size(); i++) {
+            try {
+                Class<?> cl = cls.get(i);
+                if (cl.isAnnotationPresent(Entity.class)) {
+                    if (nombreTargetEntity.equalsIgnoreCase(cl.getSimpleName())) {//valida que exista la clase relacionada
+
+                        vect[0] = "true";
+
+                        if (cl.isAnnotationPresent(Table.class)) {
+                            Table tabla = cl.getAnnotation(Table.class);
+                            vect[1] = tabla.name();
+
+                        } else {
+                            vect[1] = cl.getSimpleName();
+                        }
+
+                        Field[] fields = cl.getDeclaredFields();
+                        for (Field values : fields) {
+                            if (values.isAnnotationPresent(Id.class)) {
+
+                              //  System.out.println("Llave primaria mtm: " + values.getName() + " Tipo: " + values.getType().getSimpleName());
+                                vect[2] = values.getName();
+                                vect[3] = values.getType().getSimpleName();
+                            }
+                        }
+                        return vect;
+                    }
+                }
+            } catch (Exception ex) {
+                System.err.println("Got exception: " + ex.getMessage());
+            }
+        }
+        return vect;
+    }
+
+
+
     public String[] validarRelacionMTO(String nombreTargetEntity, List<Class<?>> cls) {
         String vect[] = new String[4]; //i=1 existe, i=2 nombre de la tabla, i=3 nombre de la pk, i=4 tipo de la pk
         vect[0] = "false";
@@ -196,14 +236,12 @@ public class Validations {
 
         for (int i = 0; i < entidads.size(); i++) {
             g.addVertex(entidads.get(i).nombTable);
-            System.out.println(entidads.get(i).getNombTable());
 
         }
         for (int i = 0; i < entidads.size(); i++) {
 
             for (int j = 0; j < entidads.get(i).listaOneToOne.size(); j++) {
                 g.addEdge(entidads.get(i).nombTable, entidads.get(i).getLista1().get(j).getTargetEntity());
-                System.out.println("aristas: " + entidads.get(i).getLista1().size());
             }
             for (int j = 0; j < entidads.get(i).getListaOneToMany().size(); j++) {
 

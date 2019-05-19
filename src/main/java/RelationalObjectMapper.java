@@ -1,9 +1,5 @@
-import java.io.IOException;
-import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
-import java.io.*;
-import java.util.*;
 import java.lang.*;
 
 public class RelationalObjectMapper {
@@ -12,6 +8,7 @@ public class RelationalObjectMapper {
 
         ClassReader reader = new ClassReader();
         Analyzer analyzer = new Analyzer();
+        ScriptGenerator scriptGenerator=new ScriptGenerator();
         List<String> resul = new LinkedList<String>();
         Package[] packages = Package.getPackages();
         for (Package pack : packages) {
@@ -21,8 +18,12 @@ public class RelationalObjectMapper {
 
         }
         analyzer.procesaEntidades(reader.getClases());
+        analyzer.validationsCicles();
 
 
+        MySQLSentences mySQLSentences=new MySQLSentences();
+
+       mySQLSentences.imprimeScript( mySQLSentences.generateSentences(analyzer.ir.ListaDeEntidades));
     }
 }
 

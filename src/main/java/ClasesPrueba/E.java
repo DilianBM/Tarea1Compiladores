@@ -4,13 +4,25 @@ import javax.persistence.*;
 import java.beans.ConstructorProperties;
 
 @Entity
-@Inheritance(strategy =InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name = "columnadiscriminadora")
+@Table(name = "basura")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "gg")
 public class E {
+
+    @Id
+    @Column
+    String clav;
 
     @JoinColumn
     @OneToOne
     @Column
-    public A a;
+    public A yyyy;
+
+
+    @JoinColumn
+    @OneToOne
+    @Column
+    public A assS;
+
 
 }

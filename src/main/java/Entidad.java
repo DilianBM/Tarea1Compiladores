@@ -54,6 +54,9 @@ public class Entidad {
         return columns;
     }
 
+    public List<ManytoManyClass> getListaManyToMany() {
+        return ListaManyToMany;
+    }
 
     public String imprimecolumns() {
         String h = "";

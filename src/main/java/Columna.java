@@ -1,12 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Columna {
-    Boolean nullable;
+    Boolean nullable=true;
     Boolean updatable;
-    Boolean Lob;
+    Boolean Lob=false;
     String Name;
     String nombreTipo;
     int length;
     int precision;
     int scale;
+    boolean esdeRelacion=false;
 
     public String getNombreTipo() {
         return nombreTipo;
@@ -72,4 +76,6 @@ public class Columna {
     public String getName() {
         return Name;
     }
+
+
 }

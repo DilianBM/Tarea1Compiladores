@@ -3,6 +3,7 @@ package Relaciones;
 public class OnetoOneClass extends Relaciones {
     String pk;
     String nameJoinColumn;
+    String nombCol;
 
     public OnetoOneClass(String targetEnt, String b) {
         targetEntity = targetEnt;
@@ -29,4 +30,12 @@ public class OnetoOneClass extends Relaciones {
         this.pk = pk;
     }
 
+    public  void setNombCol(String nomb){
+        nombCol=nomb;
+
+    }
+
+    public String getNombCol() {
+        return nombCol;
+    }
 }
