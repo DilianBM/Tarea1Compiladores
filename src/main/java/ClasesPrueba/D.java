@@ -6,6 +6,6 @@ import javax.persistence.Entity;
 @Entity
 public class D  extends  E{
 
-    @Column
-    public boolean objeto;
+        @Column
+        public boolean objeto;
 }

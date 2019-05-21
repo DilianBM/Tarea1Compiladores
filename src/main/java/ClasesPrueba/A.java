@@ -1,13 +1,10 @@
 package ClasesPrueba;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 
 @Entity
-@Table(name = "A")
-public class A extends C{
+public class A {
     @Id
     @Column
     public boolean basura;

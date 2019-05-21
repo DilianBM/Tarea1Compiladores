@@ -95,7 +95,7 @@ public class Validations {
 
             vect[0] = "false";
         }
-        System.out.println(vect[0] + " " + vect[1] + " " + vect[2] + " " + vect[3]);
+
         return vect;
     }
 

@@ -11,16 +11,13 @@ public class F extends E {
     @JoinColumn
     @OneToOne
     @Column
-    public A awsss;
+    public B awss;
 
     @JoinColumn
     @OneToMany
     @Column
-    public A a2;
+    public B a2;
 
-    @Column
-    @ManyToMany
-    @JoinTable(name="Tabla F_E", joinColumns=@JoinColumn(name="F_id"), inverseJoinColumns=@JoinColumn(name="E_id"))
-    public  E instanciaE;
+
 
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity()
-@Table(name = "NOMBRE DE TABLA 2")
+@Table(name = "NOMBREDETABLA2")
 public class B  {
     @Id
     @Column

@@ -3,12 +3,10 @@ package ClasesPrueba;
 import javax.persistence.*;
 
 @Entity
-public class C {
-
+public class C  {
     @Id
     @Column(length = 244)
     String primaryK;
-
 
 
     @Column(length = 45)
@@ -20,9 +18,6 @@ public class C {
     @ManyToOne
     @JoinColumn(name = "B_id")
     public B InstanciaB2;
-
-
-
 
 
 }

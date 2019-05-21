@@ -4,11 +4,13 @@ import Relaciones.Relaciones;
 import Relaciones.OnetoManyClass;
 import Relaciones.ManytoOneClass;
 import Relaciones.ManytoManyClass;
+
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
 import static java.lang.System.out;
 
 public class Analyzer {
@@ -37,9 +39,14 @@ public class Analyzer {
         }
         for (int i = 0; i < ir.ListaDeEntidades.size(); i++) {
 
-            // System.out.println("Nombre de Entidad: " + ir.ListaDeEntidades.get(i).getNombTable() + "\n" + ir.ListaDeEntidades.get(i).imprimecolumns() + "\n");
+            // System.out.println("Nombre de Entidad: " + ir.ListaDeEntidades.get(i).getNombTable() + "\n"  + "\n");
 
         }
+
+    }
+
+    public void borraEntrep() {
+
 
     }
 
@@ -112,6 +119,7 @@ public class Analyzer {
         Field[] fields = cl.getDeclaredFields();
         Columna columna2;
         Columna columna;
+        String pkType = "";
         for (Field values : fields) {
 
 
@@ -120,7 +128,7 @@ public class Analyzer {
                 columna2 = new Columna();
                 columna2 = defirnirColumna(values, columna2);
                 entidad.setPrimaryKey(columna2);
-
+                pkType = values.getType().getSimpleName();
 
             }
             if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToOne.class) != true && values.isAnnotationPresent(OneToMany.class) != true && values.isAnnotationPresent(ManyToOne.class) != true && values.isAnnotationPresent(ManyToMany.class) != true && !values.isAnnotationPresent(Id.class)) {
@@ -131,7 +139,9 @@ public class Analyzer {
             }
             if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToOne.class) == true && !values.isAnnotationPresent(Id.class)) {
                 columna = new Columna();
-                this.MapeaOneToOne(entidad, values, columna);
+                MapeaOneToOne(entidad, values, columna);
+
+
             }
 
             if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(OneToMany.class) == true && !values.isAnnotationPresent(Id.class)) {
@@ -145,7 +155,7 @@ public class Analyzer {
             }
 
             if (values.isAnnotationPresent(Column.class) && values.isAnnotationPresent(ManyToMany.class) == true && !values.isAnnotationPresent(Id.class)) {
-                this.MapeaManyToMany(entidad, values);
+                this.MapeaManyToMany(entidad, values, pkType);
             }
 
         }
@@ -247,28 +257,39 @@ public class Analyzer {
                     } else {
                         entidadTemp.setNombTable(clase.getSimpleName());
                     }
+
                     readMembers(clase, entidadTemp);
                     listtmp.add(entidadTemp);
-
                     clase = clase.getSuperclass();
+
                 }
+
             }
+
             if (nomEntidad.compareToIgnoreCase(clase.getSimpleName()) != 0) {
                 listtmp.clear();
+            } else {
+                for (int k = 0; k < listtmp.size(); k++) {
+                    ent.add(listtmp.get(k));
+                }
             }
-        }
 
+        }
 
         //  ir.entidadesconherencia.put(entidadesHerencia, listtmp);
         if (entidadesHerencia.getEstrategia().compareToIgnoreCase("SINGLE_TABLE") == 0) {
         }
 
-        for (int i = 0; i < listtmp.size(); i++) {
-            ent.add(listtmp.get(i));
+
+        for (int i = 0; i < ent.size(); i++) {
+          System.out.println(ent.get(i).getNombTable());
+
+
         }
+        System.out.println("SIZE " + ent.size());
 
+        InheritanceSingleTable(entidadesHerencia, ent, clasePadre);
 
-        InheritanceSingleTable(entidadesHerencia, listtmp, clasePadre);
 
     }
 
@@ -289,6 +310,7 @@ public class Analyzer {
 
             }
 
+
             for (int i = 0; i < entidadHerencia.getEntidad().listaOneToOne.size(); i++) {
                 entidad.listaOneToOne.add(entidadHerencia.getEntidad().listaOneToOne.get(i));
             }
@@ -304,7 +326,9 @@ public class Analyzer {
                 entidad.getListaManyToMany().add(entidadHerencia.entidad.getListaManyToMany().get(i));
 
             }
+            System.out.println("comaama" + list.size());
             for (int i = 0; i < list.size(); i++) {
+
                 for (int j = 0; j < list.get(i).getColumns().size(); j++) {
 
                     entidad.columns.add(list.get(i).getColumns().get(j));
@@ -313,6 +337,7 @@ public class Analyzer {
                 }
                 for (int k = 0; k < list.get(i).listaOneToOne.size(); k++) {
                     entidad.listaOneToOne.add(list.get(i).listaOneToOne.get(k));
+
 
                 }
                 for (int k = 0; k < list.get(i).getListaOneToMany().size(); k++) {
@@ -341,6 +366,7 @@ public class Analyzer {
 
     public void MapeaOneToOne(Entidad entidad, Field values, Columna columna) {
         OneToOne oto = values.getAnnotation(OneToOne.class);
+        Column column = null;
         OnetoOneClass relacionNueva = new OnetoOneClass();
         boolean esdueña = false;
 
@@ -381,7 +407,7 @@ public class Analyzer {
                 getEnumeracion(values, columna);
 
             }
-            Column column = values.getAnnotation(Column.class);
+            column = values.getAnnotation(Column.class);
 
             if (vect[3].compareToIgnoreCase("String") == 0) {
                 columna.setNombreTipo("VARCHAR ()");
@@ -419,9 +445,11 @@ public class Analyzer {
             columna.setLength(column.length());
             entidad.setColumns(columna);
 
+
         } else {
             //System.out.println("No se encontro la clase relacionada.");
         }
+
     }
 
     public void MapeaOneToMany(Entidad entidad, Field values, Columna columna) {
@@ -590,7 +618,7 @@ public class Analyzer {
 
     }
 
-    public void MapeaManyToMany(Entidad entidad, Field values) {
+    public void MapeaManyToMany(Entidad entidad, Field values, String pkType) {
 
         ManytoManyClass relacionNueva = new ManytoManyClass();
         if (values.isAnnotationPresent(JoinTable.class)) {
@@ -603,9 +631,9 @@ public class Analyzer {
 
             String llaveDebil = jt.inverseJoinColumns()[0].name();
 
+
             relacionNueva.setTableName(nombreTabla);
             relacionNueva.setMypk(llaveFuerte);
-
 
             String vect[] = validations.validarRelacionMTM(values.getType().getSimpleName(), cls);
 
@@ -616,6 +644,7 @@ public class Analyzer {
                 relacionNueva.setTargetEntity(vect[1]);
                 relacionNueva.setTargetEntityPK(vect[2]);
                 relacionNueva.setTargetEntityPKType(vect[3]);
+                relacionNueva.setMypkType(pkType);
 
                 System.out.println("ManyToMany ->" + "Llave fuerte: " + relacionNueva.getMypk() + " El nombre de la clase asociada es: " + relacionNueva.getTargetEntity() + " Llave debil: " + relacionNueva.getTargetEntityPK() + " El tipo de la llave debil es: " + relacionNueva.getTargetEntityPKType() + " La nueva tabla es: " + relacionNueva.getTableName());
 

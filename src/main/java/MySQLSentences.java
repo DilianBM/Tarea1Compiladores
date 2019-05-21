@@ -12,12 +12,16 @@ public class MySQLSentences extends SentenceGenerator {
 
         for (int i = 0; i < entidades.size(); i++) {
             values = "CREATE TABLE " + entidades.get(i).getNombTable() + " ( " + "\n";
-            values += createSentencePK(entidades.get(i).getPrimaryKey());
+            if (entidades.get(i).getPrimaryKey() != null) {
+                values += createSentencePK(entidades.get(i).getPrimaryKey());
+            }
             if (entidades.get(i).getColumns().size() > 0) {
                 values += ",\n";
                 for (int j = 0; j < entidades.get(i).getColumns().size(); j++) {
+
                     if (entidades.get(i).getColumns().get(j).esdeRelacion == false) {
                         values += entidades.get(i).getColumns().get(j).Name;
+
                         if (entidades.get(i).getColumns().get(j).getNombreTipo().compareToIgnoreCase("VARCHAR ()") == 0) {
                             if (entidades.get(i).getColumns().get(j).getLob()) {
                                 values += " TEXT ";
@@ -93,14 +97,17 @@ public class MySQLSentences extends SentenceGenerator {
                         String tmp = entidades.get(i).getColumns().get(j).Name;
                         for (int k = 0; k < entidades.get(i).getLista1().size(); k++) {
                             if (entidades.get(i).getLista1().get(k).getNameJoinColumn().compareToIgnoreCase(tmp) == 0) {
+
+                                String val = "";
                                 if (entidades.get(i).getColumns().get(j).getNombreTipo().compareToIgnoreCase("varchar ()") == 0) {
 
 
                                     entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ") ");
 
                                 }
-                                values += " " + entidades.get(i).getLista1().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " FOREING KEY REFERENCES " + entidades.get(i).getLista1().get(k).getTargetEntity() + "(" + entidades.get(i).getLista1().get(k).getPk() + ")";
+
                             }
+                            values += " " + entidades.get(i).getLista1().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getLista1().get(k).getNameJoinColumn() + ") " + "REFERENCES " + entidades.get(i).getLista1().get(k).getTargetEntity() + "(" + entidades.get(i).getLista1().get(k).getPk() + ")";
 
 
                         }
@@ -111,19 +118,22 @@ public class MySQLSentences extends SentenceGenerator {
                                     entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ") ");
 
                                 }
-                                values += " " + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " FOREING KEY REFERENCES " + entidades.get(i).getListaOneToMany().get(k).getTargetEntity() + "(" + entidades.get(i).getListaOneToMany().get(k).getPk() + ")";
+                                values += " " + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaOneToMany().get(k).getTargetEntity() + "(" + entidades.get(i).getListaOneToMany().get(k).getPk() + ")";
+
                             }
 
 
                         }
                         for (int k = 0; k < entidades.get(i).listaManyToOne.size(); k++) {
                             if (entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn().compareToIgnoreCase(tmp) == 0) {
+
                                 if (entidades.get(i).getColumns().get(j).getNombreTipo().compareToIgnoreCase("varchar ()") == 0) {
 
-                                    entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ") ");
+                                    entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ")");
 
                                 }
-                                values += " " + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " FOREING KEY REFERENCES " + entidades.get(i).getListaManyToOne().get(k).getTargetEntity() + "(" + entidades.get(i).getListaManyToOne().get(k).getPk() + ")";
+                                values += " " + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaManyToOne().get(k).getTargetEntity() + "(" + entidades.get(i).getListaManyToOne().get(k).getPk() + ")";
+
                             }
 
 
@@ -143,18 +153,72 @@ public class MySQLSentences extends SentenceGenerator {
             sentences.add(values);
         }
 
-        for (int i = 0; i < entidades.size(); i++){
+        for (int i = 0; i < entidades.size(); i++) {
             String scriptMTM = "";
-            for(int j = 0; j< entidades.get(i).getListaManyToMany().size(); j++){
+            for (int j = 0; j < entidades.get(i).getListaManyToMany().size(); j++) {
 
-                scriptMTM += "CREATE TABLE " + entidades.get(i).getListaManyToMany().get(j).getTableName() + " (";
+                scriptMTM += "CREATE TABLE " + entidades.get(i).getListaManyToMany().get(j).getTableName() + " (\n";
 
-                System.out.println("Relacion mtm: " + scriptMTM);
+                scriptMTM += entidades.get(i).getListaManyToMany().get(j).getTargetEntityPK();
+
+                String tipopk1 = entidades.get(i).getListaManyToMany().get(j).getTargetEntityPKType();
+
+
+                if (tipopk1.compareToIgnoreCase("String") == 0) {
+                    scriptMTM += " VARCHAR (255) NOT NULL,\n";
+                }
+
+                if (tipopk1.compareToIgnoreCase("Boolean") == 0) {
+                    scriptMTM += " Boolean NOT NULL,\n";
+                }
+
+                if (tipopk1.compareToIgnoreCase("Float") == 0) {
+                    scriptMTM += " Float NOT NULL,\n";
+                }
+
+                if (tipopk1.compareToIgnoreCase("Double") == 0) {
+                    scriptMTM += " Double NOT NULL,\n";
+                }
+
+                if (tipopk1.compareToIgnoreCase("Int") == 0) {
+                    scriptMTM += " Int NOT NULL,\n";
+                }
+
+                scriptMTM += entidades.get(i).getListaManyToMany().get(j).getMypk();
+
+                String tipopk2 = entidades.get(i).getListaManyToMany().get(j).getMypkType();
+
+                if (tipopk2.compareToIgnoreCase("String") == 0) {
+                    scriptMTM += " VARCHAR (255) NOT NULL, \n";
+                }
+
+                if (tipopk2.compareToIgnoreCase("Boolean") == 0) {
+                    scriptMTM += " Boolean NOT NULL, \n";
+                }
+
+                if (tipopk2.compareToIgnoreCase("Float") == 0) {
+                    scriptMTM += " Float NOT NULL, \n";
+                }
+
+                if (tipopk2.compareToIgnoreCase("Double") == 0) {
+                    scriptMTM += " Double NOT NULL, \n";
+                }
+
+                if (tipopk2.compareToIgnoreCase("Int") == 0) {
+                    scriptMTM += " Int NOT NULL, \n";
+                }
+
+                scriptMTM += "PRIMARY KEY (" + entidades.get(i).getListaManyToMany().get(j).getTargetEntityPK() + "," + entidades.get(i).getListaManyToMany().get(j).getMypk() + "), \n";
+
+                scriptMTM += "FOREIGN KEY (" + entidades.get(i).getListaManyToMany().get(j).getTargetEntityPK() + ") REFERENCES " + entidades.get(i).getListaManyToMany().get(j).getTargetEntity() + "(" + entidades.get(i).getListaManyToMany().get(j).getTargetEntityPK() + "),\n";
+
+                scriptMTM += "FOREIGN KEY (" + entidades.get(i).getListaManyToMany().get(j).getMypk() + ") REFERENCES " + entidades.get(i).getNombTable() + "(" + entidades.get(i).getListaManyToMany().get(j).getMypk() + ")\n);";
+
+                sentences.add(scriptMTM);
 
             }
-
-
         }
+
         return sentences;
     }
 
@@ -225,7 +289,7 @@ public class MySQLSentences extends SentenceGenerator {
 
             }
         }
-        if (columna.getNombreTipo().compareToIgnoreCase("BOOLEAM") == 0) {
+        if (columna.getNombreTipo().compareToIgnoreCase("BOOLEAN") == 0) {
             values += " BOOLEAN ";
             if (!columna.getNullable()) {
                 values += " NOT NULL ";

@@ -1,7 +1,8 @@
 import java.util.List;
 
-public class ScriptGenerator {
+public abstract class ScriptGenerator extends  Configuration {
 
-    public void createScript(List<String> sentences){}
+    public abstract void createScript(String ruta);
+
 
 }

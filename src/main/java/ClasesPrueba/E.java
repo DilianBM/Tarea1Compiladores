@@ -14,7 +14,7 @@ public class E {
     String clav;
 
     @JoinColumn
-    @OneToOne
+    @OneToMany
     @Column
     public A yyyy;
 
