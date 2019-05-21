@@ -245,6 +245,7 @@ public class Analyzer {
     public void mapeaHerencia(List<Class<?>> cl, String nomEntidad, EntidadHerencia entidadesHerencia, Class<?> clasePadre) {
         List<Entidad> listtmp = new ArrayList<>();
         Class<?> clase = null;
+        boolean estarep = false;
         for (int i = 0; i < cl.size(); i++) {
             Entidad entidadTemp = new Entidad();
             clase = cl.get(i);
@@ -259,18 +260,31 @@ public class Analyzer {
                     }
 
                     readMembers(clase, entidadTemp);
+
+
                     listtmp.add(entidadTemp);
+
+                    // listtmp.add(entidadTemp);
                     clase = clase.getSuperclass();
 
                 }
 
             }
-
+            boolean esta = false;
             if (nomEntidad.compareToIgnoreCase(clase.getSimpleName()) != 0) {
                 listtmp.clear();
             } else {
                 for (int k = 0; k < listtmp.size(); k++) {
-                    ent.add(listtmp.get(k));
+                    for (int l = 0; l < ent.size(); l++) {
+                        if (listtmp.get(k).getNombTable().compareToIgnoreCase(ent.get(l).getNombTable()) == 0) {
+                            esta = true;
+
+                        }
+                    }
+                    if (!esta) {
+                        ent.add(listtmp.get(k));
+                    }
+                    esta = false;
                 }
             }
 
@@ -282,12 +296,12 @@ public class Analyzer {
 
 
         for (int i = 0; i < ent.size(); i++) {
-          System.out.println(ent.get(i).getNombTable());
-
+            System.out.println("Entidad " + ent.get(i).getNombTable());
 
         }
-        System.out.println("SIZE " + ent.size());
 
+
+        System.out.println(listtmp.size());
         InheritanceSingleTable(entidadesHerencia, ent, clasePadre);
 
 
@@ -326,9 +340,9 @@ public class Analyzer {
                 entidad.getListaManyToMany().add(entidadHerencia.entidad.getListaManyToMany().get(i));
 
             }
-            System.out.println("comaama" + list.size());
-            for (int i = 0; i < list.size(); i++) {
 
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println("comaama" + list.get(i).getNombTable() + list.size());
                 for (int j = 0; j < list.get(i).getColumns().size(); j++) {
 
                     entidad.columns.add(list.get(i).getColumns().get(j));
@@ -358,6 +372,7 @@ public class Analyzer {
 
 
         }
+
 
         ir.ListaDeEntidades.add(entidad);
 

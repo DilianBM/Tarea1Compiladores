@@ -10,6 +10,7 @@ public class MySQLSentences extends SentenceGenerator {
         List<String> sentences = new ArrayList();
         String values;
 
+
         for (int i = 0; i < entidades.size(); i++) {
             values = "CREATE TABLE " + entidades.get(i).getNombTable() + " ( " + "\n";
             if (entidades.get(i).getPrimaryKey() != null) {
@@ -96,18 +97,17 @@ public class MySQLSentences extends SentenceGenerator {
 
                         String tmp = entidades.get(i).getColumns().get(j).Name;
                         for (int k = 0; k < entidades.get(i).getLista1().size(); k++) {
+
                             if (entidades.get(i).getLista1().get(k).getNameJoinColumn().compareToIgnoreCase(tmp) == 0) {
 
                                 String val = "";
                                 if (entidades.get(i).getColumns().get(j).getNombreTipo().compareToIgnoreCase("varchar ()") == 0) {
-
-
                                     entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ") ");
 
                                 }
 
                             }
-                            values += " " + entidades.get(i).getLista1().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getLista1().get(k).getNameJoinColumn() + ") " + "REFERENCES " + entidades.get(i).getLista1().get(k).getTargetEntity() + "(" + entidades.get(i).getLista1().get(k).getPk() + ")";
+                            values += " " + entidades.get(i).getLista1().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(k).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getLista1().get(k).getNameJoinColumn() + ") " + "REFERENCES " + entidades.get(i).getLista1().get(k).getTargetEntity() + "(" + entidades.get(i).getLista1().get(k).getPk() + ") \n";
 
 
                         }
@@ -118,7 +118,7 @@ public class MySQLSentences extends SentenceGenerator {
                                     entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ") ");
 
                                 }
-                                values += " " + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaOneToMany().get(k).getTargetEntity() + "(" + entidades.get(i).getListaOneToMany().get(k).getPk() + ")";
+                                values += " " + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(k).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaOneToMany().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaOneToMany().get(k).getTargetEntity() + "(" + entidades.get(i).getListaOneToMany().get(k).getPk() + ") \n";
 
                             }
 
@@ -132,7 +132,7 @@ public class MySQLSentences extends SentenceGenerator {
                                     entidades.get(i).getColumns().get(j).setNombreTipo(" VARCHAR (" + entidades.get(i).getColumns().get(j).getLength() + ")");
 
                                 }
-                                values += " " + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(j).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaManyToOne().get(k).getTargetEntity() + "(" + entidades.get(i).getListaManyToOne().get(k).getPk() + ")";
+                                values += " " + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + " " + entidades.get(i).getColumns().get(k).getNombreTipo() + " , " + " FOREIGN KEY (" + entidades.get(i).getListaManyToOne().get(k).getNameJoinColumn() + ") REFERENCES " + entidades.get(i).getListaManyToOne().get(k).getTargetEntity() + "(" + entidades.get(i).getListaManyToOne().get(k).getPk() + ") \n";
 
                             }
 
