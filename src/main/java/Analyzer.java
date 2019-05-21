@@ -295,13 +295,6 @@ public class Analyzer {
         }
 
 
-        for (int i = 0; i < ent.size(); i++) {
-            System.out.println("Entidad " + ent.get(i).getNombTable());
-
-        }
-
-
-        System.out.println(listtmp.size());
         InheritanceSingleTable(entidadesHerencia, ent, clasePadre);
 
 
@@ -342,29 +335,20 @@ public class Analyzer {
             }
 
             for (int i = 0; i < list.size(); i++) {
-                System.out.println("comaama" + list.get(i).getNombTable() + list.size());
                 for (int j = 0; j < list.get(i).getColumns().size(); j++) {
-
                     entidad.columns.add(list.get(i).getColumns().get(j));
-
-
                 }
                 for (int k = 0; k < list.get(i).listaOneToOne.size(); k++) {
                     entidad.listaOneToOne.add(list.get(i).listaOneToOne.get(k));
-
-
                 }
                 for (int k = 0; k < list.get(i).getListaOneToMany().size(); k++) {
                     entidad.getListaOneToMany().add(list.get(i).getListaOneToMany().get(k));
-
                 }
                 for (int k = 0; k < list.get(i).listaManyToOne.size(); k++) {
                     entidad.listaManyToOne.add(list.get(i).listaManyToOne.get(k));
-
                 }
                 for (int k = 0; k < list.get(i).getListaManyToMany().size(); k++) {
                     entidad.getListaManyToMany().add(list.get(i).getListaManyToMany().get(k));
-
                 }
 
 
