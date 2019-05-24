@@ -3,8 +3,10 @@ import jdk.dynalink.linker.support.CompositeTypeBasedGuardingDynamicLinker;
 import java.util.ArrayList;
 import java.util.List;
 
+//Clase encargada de generar las sentencias correspondientes con la sintaxis de MySQL
 public class MySQLSentences extends SentenceGenerator {
 
+    //Recibe una lista de entidades y a partir de ella genera las sentencias de "CREATE TABLE"
     @Override
     public List<String> generateSentences(List<Entidad> entidades) {
         List<String> sentences = new ArrayList();
@@ -180,6 +182,8 @@ public class MySQLSentences extends SentenceGenerator {
         return sentences;
     }
 
+
+    //Genera la sentencia correspondiente a la columna de la llave primaria
     public String createSentencePK(Columna columna) {
         String values = "";
         values += columna.Name;
@@ -266,6 +270,7 @@ public class MySQLSentences extends SentenceGenerator {
 
     }
 
+    //Genera las sentencias correspondientes a las columnas que representan llaves foraneas
     public String sentenciasRelaciones(Entidad entidad, Columna columna) {
         String tmp = columna.Name;
         String values = "";

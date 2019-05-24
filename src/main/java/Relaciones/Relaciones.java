@@ -2,7 +2,7 @@ package Relaciones;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Clase abstracta y padre de las clases que representan los 4 tipos de relaciones
 public abstract class Relaciones {
 
     String targetEntity = "";//jalar el nombre del field

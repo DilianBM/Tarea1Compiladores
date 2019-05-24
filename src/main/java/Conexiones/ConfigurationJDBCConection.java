@@ -1,5 +1,7 @@
 package Conexiones;
 
+//Clase abstracta de la cual heredan las clases encargadas de generar la configuracion para crear la conexion con las respectivas
+//bases de datos
 public abstract class ConfigurationJDBCConection {
     String URL;
     String user;

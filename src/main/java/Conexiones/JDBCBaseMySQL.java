@@ -3,6 +3,7 @@ package Conexiones;
 import javax.swing.*;
 import java.sql.*;
 
+//Clase encargada de tomar los credenciales y crear la conexion para MySQL
 public class JDBCBaseMySQL extends ConfigurationJDBCConection{
 
 
@@ -15,6 +16,7 @@ public class JDBCBaseMySQL extends ConfigurationJDBCConection{
         return c;
     }
 
+    //Crea la conexiona partir de un URL, un usuario y una contrasena
     @Override
     public void createConection() {
         try {

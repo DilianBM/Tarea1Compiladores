@@ -1,3 +1,4 @@
+//Define una entidad que representa una ISA
 public class EntidadHerencia {
 
         public Entidad entidad;

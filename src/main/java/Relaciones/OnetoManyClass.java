@@ -1,5 +1,5 @@
 package Relaciones;
-
+//Representacion de una relacion OneToMany
 public class OnetoManyClass extends Relaciones {
     String nameJoinColumn="";
     String pk="";

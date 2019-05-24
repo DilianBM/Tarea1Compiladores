@@ -1,5 +1,5 @@
 package Relaciones;
-
+//Representacion de una relacion ManyToMany
 public class ManytoManyClass {
 
     String tableName;

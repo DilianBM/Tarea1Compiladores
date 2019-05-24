@@ -13,6 +13,7 @@ import java.util.List;
 
 import static java.lang.System.out;
 
+//Clase encargada de interpretar las clases y generar una representacion intermedia
 public class Analyzer {
     //List<Entidad> ListaDeEntidades = new ArrayList<>();
     IR ir = new IR();
@@ -20,6 +21,8 @@ public class Analyzer {
     List<Class<?>> cls = new ArrayList<>();
     List<Entidad> ent = new ArrayList<Entidad>();
 
+
+    //Recibe la lista de clases e itera sobre ella para generar las instancias de entidades
     public void procesaEntidades(List<Class<?>> cl) {
         cls = cl;
         for (int i = 0; i < cl.size(); i++) {
@@ -34,28 +37,23 @@ public class Analyzer {
                     ir.ListaDeEntidades.remove(i);
                 }
             }
-
-
         }
         for (int i = 0; i < ir.ListaDeEntidades.size(); i++) {
 
-            // System.out.println("Nombre de Entidad: " + ir.ListaDeEntidades.get(i).getNombTable() + "\n"  + "\n");
-
         }
 
     }
 
-    public void borraEntrep() {
-
-
-    }
-
+    //Metodo encargado de de validar que no existan ciclos y de que exista una llave primaria para cada entidad
     public void validationsCicles() {
         validations.whenCheckCycles_thenDetectCycles(validations.getDirectedGraph(ir.ListaDeEntidades));
 
         validations.validadExistenciasPK(ir.ListaDeEntidades);
     }
 
+
+    //Recibe una clase y una instancia de entidad en la cual va a guardar toda la informacion referente a las anotaciones de clase
+    // Verifica la existencia de las anotaciones @Table, @Inheritance, @MappedSupperClass y @DiscriminatorColumn
     public void ProcessClassAnnotations(Class<?> cl, Entidad entidad) {
         Class<?> clase = null;
         Annotation[] anotations = cl.getAnnotations();
@@ -114,7 +112,8 @@ public class Analyzer {
 
     }
 
-
+    //Recibe una clase y una instancia de entidad en la cual va a guardar toda la informacion referente a las anotaciones de los
+    // atributos de la clase. Verifica la existencia de las anotaciones @Id, @Column, @OneToOne, @OneToMany, @ManyToOne, @ManyToMany
     public void readMembers(Class<?> cl, Entidad entidad) {
         Field[] fields = cl.getDeclaredFields();
         Columna columna2;
@@ -162,6 +161,8 @@ public class Analyzer {
     }
 
 
+    //Recibe un "field" o atributo de la clase, el cual mapea en una instancia de columna
+    //Verifica la existencia de las anotaciones @Lob y @Enumarated,
     public Columna defirnirColumna(Field field, Columna columna) {
         Column column = field.getAnnotation(Column.class);
         if (column.name().compareToIgnoreCase("") == 0) {
@@ -217,6 +218,8 @@ public class Analyzer {
         return columna;
     }
 
+
+    //Recibe un "field" o campo que tiene la anotacion @Enumerated y lo mapea en una instancia de columna
     public void getEnumeracion(Field field, Columna columna) {
         Enumerated enumeracion = field.getAnnotation(Enumerated.class);
         if (field.getType().isEnum()) {
@@ -228,6 +231,9 @@ public class Analyzer {
         }
     }
 
+
+    //Recibe una clase y una entidad
+    //Mapea en la entidad para cuando la clase trae la anotacion @MappedSupperclass
     public void MapeaSuperClass(Class<?> clase, Entidad entidad) {
         boolean seguir = false;
         while (clase.getSimpleName().compareToIgnoreCase("Object") != 0 && seguir == false) {
@@ -242,6 +248,9 @@ public class Analyzer {
 
     }
 
+    //Recibe una lista de clases, un nombre de entidad, una entidad de herencia y una clase padre
+    //Toma la lista de clases e itera sobre ella buscando cuales subclases heredan de la clase padre y asi genera una entidad
+    //que representa la ISA
     public void mapeaHerencia(List<Class<?>> cl, String nomEntidad, EntidadHerencia entidadesHerencia, Class<?> clasePadre) {
         List<Entidad> listtmp = new ArrayList<>();
         Class<?> clase = null;
@@ -278,7 +287,6 @@ public class Analyzer {
                     for (int l = 0; l < ent.size(); l++) {
                         if (listtmp.get(k).getNombTable().compareToIgnoreCase(ent.get(l).getNombTable()) == 0) {
                             esta = true;
-
                         }
                     }
                     if (!esta) {
@@ -287,7 +295,6 @@ public class Analyzer {
                     esta = false;
                 }
             }
-
         }
 
         //  ir.entidadesconherencia.put(entidadesHerencia, listtmp);
@@ -300,6 +307,8 @@ public class Analyzer {
 
     }
 
+    //Recibe una entidad de herencia y una lista de entidades
+    //Extrae las relaciones de las superclases para heredarlas a la subclase
     public void InheritanceSingleTable(EntidadHerencia entidadHerencia, List<Entidad> list, Class<?> clasePadre) {
         Entidad entidad = new Entidad();
         entidad.setNombTable(entidadHerencia.getEntidad().nombTable + "_new");
@@ -363,6 +372,8 @@ public class Analyzer {
     }
 
 
+    //Recibe una entidad, un "field" o campo y una columna
+    //Se encarga de generar una columna que representa la llave foranea de una relacion OneToOne y la guarda en su respectiva entidad
     public void MapeaOneToOne(Entidad entidad, Field values, Columna columna) {
         OneToOne oto = values.getAnnotation(OneToOne.class);
         Column column = null;
@@ -455,6 +466,8 @@ public class Analyzer {
 
     }
 
+    //Recibe una entidad, un "field" o campo y una columna
+    //Se encarga de generar una columna que representa la llave foranea de una relacion OneToMany y la guarda en su respectiva entidad
     public void MapeaOneToMany(Entidad entidad, Field values, Columna columna) {
         OneToMany otm = values.getAnnotation(OneToMany.class);
         OnetoManyClass relacionNueva = new OnetoManyClass();
@@ -548,6 +561,8 @@ public class Analyzer {
         }
     }
 
+    //Recibe una entidad, un "field" o campo y una columna
+    //Se encarga de generar una columna que representa la llave foranea de una relacion ManyToOne y la guarda en su respectiva entidad
     public void MapeaManyToOne(Entidad entidad, Field values, Columna columna) {
 
         OneToMany otm = values.getAnnotation(OneToMany.class);
@@ -621,7 +636,9 @@ public class Analyzer {
         }
 
     }
-
+    //Recibe una entidad, un "field" o campo y un data type
+    //Se encarga de generar una instancia de relacion ManyToMany, la cual representa la tabla que se genera a partir de una
+    //relacion ManyToMany
     public void MapeaManyToMany(Entidad entidad, Field values, String pkType) {
 
         ManytoManyClass relacionNueva = new ManytoManyClass();

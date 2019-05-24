@@ -10,6 +10,7 @@ import java.util.List;
 
 import static java.lang.System.out;
 
+//Clase encargada de recibir el paquete en el cual se encuentran las clases que se quieren mapear a una base de datos relacional
 public class ClassReader {
     Analyzer analyzer = new Analyzer();
     List<Class<?>> clases = new ArrayList<>();
@@ -18,6 +19,7 @@ public class ClassReader {
         return clases;
     }
 
+    //Recibe el nombre literal del paquete y extrae de el las clases que tengan la anotacion @Entity
     public void proccesClass(String Package) {
 
         String scanPackage = Package;

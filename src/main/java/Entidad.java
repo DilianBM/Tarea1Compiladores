@@ -8,6 +8,7 @@ import Relaciones.OnetoOneClass;
 import java.util.ArrayList;
 import java.util.List;
 
+//Definicion de una entidad con sus respectivos atributos y relaciones
 public class Entidad {
     List<Columna> columns = new ArrayList<Columna>();
     Columna primaryKey=null;

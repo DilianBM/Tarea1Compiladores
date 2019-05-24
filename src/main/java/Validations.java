@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+
+//Clase encargada de las validaciones a la hora del procesamiento de las clases
 public class Validations {
     DirectedGraph<String, DefaultEdge> g;
 
@@ -27,17 +29,19 @@ public class Validations {
         g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
     }
 
+
+    //Metodo encargado de validar que toda entidad tenga su respectiva llave primaria
     public void validadExistenciasPK(List<Entidad> entidads) {
         for (int i = 0; i < entidads.size(); i++) {
             if (entidads.get(i).getPrimaryKey() == null) {
                 System.out.println("Error no existe PK para la entidad " + entidads.get(i).getNombTable());
             }
-
         }
-
     }
 
 
+    //Valida la correctitud de las relaciones OneToOne. Valida que existan las clases relacionadas y que traigan
+    //los parametros correspondientes
     public String[] validarRelacionOTO(OnetoOneClass c, String entidadRel, List<Class<?>> cls) {
         String vect[] = new String[5];
         String entidadRelacionada = entidadRel;
@@ -68,9 +72,9 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                Column column=values.getAnnotation(Column.class);
+                                Column column = values.getAnnotation(Column.class);
                                 if (column.name().compareToIgnoreCase("") != 0) {
-                                    vect[2]=column.name();
+                                    vect[2] = column.name();
 
                                 } else {
                                     vect[2] = values.getName();
@@ -107,7 +111,8 @@ public class Validations {
         return vect;
     }
 
-
+    //Valida la correctitud de las relaciones OneToMany. Valida que existan las clases relacionadas y que traigan
+    //los parametros correspondientes
     public String[] validarRelacionOTM(OnetoManyClass c, String entidadRel, List<Class<?>> cls) {
         String vect[] = new String[5];
         String entidadRelacionada = entidadRel;
@@ -130,9 +135,9 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                Column column=values.getAnnotation(Column.class);
+                                Column column = values.getAnnotation(Column.class);
                                 if (column.name().compareToIgnoreCase("") != 0) {
-                                    vect[2]=column.name();
+                                    vect[2] = column.name();
 
                                 } else {
                                     vect[2] = values.getName();
@@ -161,7 +166,8 @@ public class Validations {
         return vect;
     }
 
-
+    //Valida la correctitud de las relaciones ManyToMany. Valida que existan las clases relacionadas y que traigan
+    //los parametros correspondientes
     public String[] validarRelacionMTM(String nombreTargetEntity, List<Class<?>> cls) {
         String vect[] = new String[4]; //i=0 existe, i=1 nombre de la tabla, i=2 nombre de la pk, i=3 tipo de la pk
         vect[0] = "false";
@@ -186,9 +192,9 @@ public class Validations {
                             if (values.isAnnotationPresent(Id.class)) {
 
                                 //  System.out.println("Llave primaria mtm: " + values.getName() + " Tipo: " + values.getType().getSimpleName());
-                                Column column=values.getAnnotation(Column.class);
+                                Column column = values.getAnnotation(Column.class);
                                 if (column.name().compareToIgnoreCase("") != 0) {
-                                    vect[2]=column.name();
+                                    vect[2] = column.name();
 
                                 } else {
                                     vect[2] = values.getName();
@@ -211,7 +217,8 @@ public class Validations {
         return vect;
     }
 
-
+    //Valida la correctitud de las relaciones ManyToOne Valida que existan las clases relacionadas y que traigan
+    //los parametros correspondientes
     public String[] validarRelacionMTO(String nombreTargetEntity, List<Class<?>> cls) {
         String vect[] = new String[4]; //i=1 existe, i=2 nombre de la tabla, i=3 nombre de la pk, i=4 tipo de la pk
         vect[0] = "false";
@@ -237,9 +244,9 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                Column column=values.getAnnotation(Column.class);
+                                Column column = values.getAnnotation(Column.class);
                                 if (column.name().compareToIgnoreCase("") != 0) {
-                                    vect[2]=column.name();
+                                    vect[2] = column.name();
 
                                 } else {
                                     vect[2] = values.getName();
@@ -262,6 +269,7 @@ public class Validations {
     }
 
 
+    //Genera un grafo para verificar si hay ciclos en las relaciones
     public Graph<String, DefaultEdge> getDirectedGraph(List<Entidad> entidads) {
 
         for (int i = 0; i < entidads.size(); i++) {
@@ -287,6 +295,7 @@ public class Validations {
         return g;
     }
 
+    //Detecta ciclos en el grafo de relaciones
     public void whenCheckCycles_thenDetectCycles(Graph<String, DefaultEdge> gr) {
         CycleDetector<String, DefaultEdge> cycleDetector
                 = new CycleDetector<String, DefaultEdge>(g);
@@ -299,11 +308,7 @@ public class Validations {
 
         }
         // Set<String> cycleVertices = cycleDetector.findCycles();
-
-
     }
-
-
 
 
 }

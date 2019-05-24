@@ -2,6 +2,7 @@ package Conexiones;
 
 import java.sql.*;
 
+//Clase encargada de tomar los credenciales y crear la conexion para PostgreSQL
 public class JDBCBasePostgres extends ConfigurationJDBCConection {
 
 
@@ -13,10 +14,8 @@ public class JDBCBasePostgres extends ConfigurationJDBCConection {
         return connection;
     }
 
-    public JDBCBasePostgres() {
 
-    }
-
+    //Crea la conexiona partir de un URL, un usuario y una contrasena
     @Override
     public void createConection() {
 

@@ -1,13 +1,15 @@
-// Java program to print DFS traversal from a given given graph 
 
 import java.io.*;
 import java.util.*;
 
-// This class represents a directed graph using adjacency list 
-// representation 
+// Esta clase representa un grafo dirigido usando lista de adyacencia
+//Tiene como fin definir la jerarquia u orden en el cual las clases se deben crear
 class Grafo {
     ListaAdyacentes l;
     List<ListaAdyacentes> lista = new ArrayList<>();
+    private int V;   // Numero de vertices
+
+    private LinkedList<Integer> adj[];
 
     class ListaAdyacentes {
         String node;
@@ -16,7 +18,7 @@ class Grafo {
 
     }
 
-
+    //Agrega vertices al grafo
     public void agreguevert(String v) {
 
         boolean existe = false;
@@ -33,11 +35,6 @@ class Grafo {
 
     }
 
-    private int V;   // No. of vertices
-
-    // Array  of lists for Adjacency List Representation
-    private LinkedList<Integer> adj[];
-
     // Constructor
     Grafo(int v) {
         V = v;
@@ -46,7 +43,7 @@ class Grafo {
             adj[i] = new LinkedList();
     }
 
-    //Function to add an edge into the graph
+    //Agrega vertices
     void addEdge(String v, String w) {
         boolean existe = false;
         for (int i = 0; i < lista.size(); i++) {
@@ -82,7 +79,6 @@ class Grafo {
         //  if (lista.listaAdyacentes.size() == 0) {
         //value += lista.node;
         list.add(lista.node);
-
 
 
         // }
@@ -121,14 +117,14 @@ class Grafo {
         // Call the recursive helper function to print DFS traversal
         // starting from all vertices one by one
         String values = "";
-        List<String> lTemp=new ArrayList<>();
-        for (int i = 0; i < lista.size(); ++i){
+        List<String> lTemp = new ArrayList<>();
+        for (int i = 0; i < lista.size(); ++i) {
             if (!lista.get(i).visitado) {
 
-               lTemp= DFSUtil(lista.get(i), i);
+                lTemp = DFSUtil(lista.get(i), i);
 
             }
-            for (int k = 0; k < lTemp.size(); ++k){
+            for (int k = 0; k < lTemp.size(); ++k) {
 
                 list.add(lTemp.get(k));
             }
@@ -137,7 +133,7 @@ class Grafo {
         return list;
     }
 
-
+    //Recibe una lista de entidades para generar un grafo a partir de ella
     public void pruebagrafo(List<Entidad> listaDeEntidades) {
 
         for (int i = 0; i < listaDeEntidades.size(); i++) {
@@ -158,11 +154,12 @@ class Grafo {
 
     }
 
+    //A partir del grafo ordena la lista de entidades
     public List<Entidad> ordenDeEjecucionTablas(List<Entidad> listaDeEntidades, List<String> listEnt) {
-        List<Entidad> lista=new ArrayList<>();
+        List<Entidad> lista = new ArrayList<>();
         for (int j = 0; j < listEnt.size(); j++) {
             for (int i = 0; i < listaDeEntidades.size(); i++) {
-                if (listEnt.get(j).compareToIgnoreCase(listaDeEntidades.get(i).getNombTable())==0){
+                if (listEnt.get(j).compareToIgnoreCase(listaDeEntidades.get(i).getNombTable()) == 0) {
                     lista.add(listaDeEntidades.get(i));
 
                 }
@@ -171,7 +168,7 @@ class Grafo {
 
         }
 
-        return  lista;
+        return lista;
     }
 
 }

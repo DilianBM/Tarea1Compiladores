@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+//Representacion de una columna perteneciente a una tabla
 public class Columna {
     Boolean nullable=true;
     Boolean updatable;

@@ -4,7 +4,10 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
+//Clase encargada de generar un archivo con el script correspondiente a la sintaxis de MySQL
 public class ScriptFileGeneratorMySQL extends ScriptGenerator {
+
+    //Recibe un string con la ruta donde se quiere generar el archivo que contiene el script
     @Override
     public void createScript(String ruta) {
         try {
