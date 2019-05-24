@@ -204,7 +204,7 @@ public class Validations {
             }
         }
         if (vect[0].compareToIgnoreCase("false") == 0) {
-            System.out.println("No existe la clase relacionada" + nombreTargetEntity);
+            System.out.println("No existe la clase relacionada " + nombreTargetEntity);
             System.exit(0);
         }
 

@@ -10,7 +10,7 @@ public class PostgresSentences extends SentenceGenerator {
         String values2 = "";
 
         for (int i = 0; i < entidades.size(); i++) {
-            values = "CREATE TABLE " + entidades.get(i).getNombTable() + " ( " + "\n";
+            values = "CREATE TABLE IF NOT EXISTS " + entidades.get(i).getNombTable() + " ( " + "\n";
             if (entidades.get(i).getPrimaryKey() != null) {
                 values += createSentencePK(entidades.get(i).getPrimaryKey());
             }

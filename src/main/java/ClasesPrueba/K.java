@@ -9,7 +9,7 @@ public class K {
     String pkK;
 
     @JoinColumn
-    @OneToOne
+    @OneToMany
     @Column
     public  H h;
 }

@@ -372,7 +372,7 @@ public class Analyzer {
         if (values.isAnnotationPresent(JoinColumn.class)) {
             JoinColumn jc = values.getAnnotation(JoinColumn.class);
             if (jc.name().compareToIgnoreCase("") != 0) {
-                relacionNueva.setNameJoinColumn(jc.name()+entidad.getNombTable());
+                relacionNueva.setNameJoinColumn(jc.name() + entidad.getNombTable());
                 System.out.println(jc.name());
             } else {
                 relacionNueva.setNameJoinColumn(values.getName() + "_id");
@@ -447,8 +447,8 @@ public class Analyzer {
 
 
         } else {
-            if(vect[0].compareToIgnoreCase("true")!=0){
-                System.out.println("No existe la clase relacionada"+ prue);
+            if (vect[0].compareToIgnoreCase("true") != 0) {
+                System.out.println("No existe la clase relacionada" + prue);
                 System.exit(0);
             }
         }
@@ -543,7 +543,7 @@ public class Analyzer {
             entidad.setColumns(columna);
 
         } else {
-            System.out.println("No existe la clase relacionada"+ prue);
+            System.out.println("No existe la clase relacionada" + prue);
             System.exit(0);
         }
     }
@@ -554,13 +554,10 @@ public class Analyzer {
         ManytoOneClass relacionNueva = new ManytoOneClass();
 
         if (values.isAnnotationPresent(JoinColumn.class) && values.getAnnotation(JoinColumn.class).name().compareToIgnoreCase("") != 0) {
-
             JoinColumn jc = values.getAnnotation(JoinColumn.class);
-            //System.out.println("jc existe y nom diferente de vacio, El nombre de la columna es " + jc.name());
             relacionNueva.setNameJoinColumn(jc.name());
 
         } else {
-            //System.out.println("No hay jc o no traia nombre, por lo que se toma el nombre de " + values.getName() + "_id");
             relacionNueva.setNameJoinColumn(values.getName() + "_id");
         }
 
@@ -617,7 +614,10 @@ public class Analyzer {
             entidad.setColumns(columna);
         } else {
 
-            System.out.println("No existe la entidad relacionada.");
+            if (vect[0].compareToIgnoreCase("true") != 0) {
+                System.out.println("No existe la clase Relacionada " + values.getName());
+                System.exit(0);
+            }
         }
 
     }
@@ -650,13 +650,10 @@ public class Analyzer {
                 relacionNueva.setTargetEntityPKType(vect[3]);
                 relacionNueva.setMypkType(pkType);
 
-                System.out.println("ManyToMany ->" + "Llave fuerte: " + relacionNueva.getMypk() + " El nombre de la clase asociada es: " + relacionNueva.getTargetEntity() + " Llave debil: " + relacionNueva.getTargetEntityPK() + " El tipo de la llave debil es: " + relacionNueva.getTargetEntityPKType() + " La nueva tabla es: " + relacionNueva.getTableName());
+                //System.out.println("ManyToMany ->" + "Llave fuerte: " + relacionNueva.getMypk() + " El nombre de la clase asociada es: " + relacionNueva.getTargetEntity() + " Llave debil: " + relacionNueva.getTargetEntityPK() + " El tipo de la llave debil es: " + relacionNueva.getTargetEntityPKType() + " La nueva tabla es: " + relacionNueva.getTableName());
 
                 entidad.ListaManyToMany.add(relacionNueva);
 
-            } else {
-
-                System.out.println("No existe la entidad relacionada.");
             }
 
         } else {

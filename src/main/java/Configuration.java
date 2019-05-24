@@ -7,6 +7,7 @@ public class Configuration {
     JDBCBasePostgres jdbcBasePostgres = new JDBCBasePostgres();
 
     public Connection setCrendentialsMySQL(String URL, String user, String password) {
+
         jdbcBaseMySQL.setPassword(password);
         jdbcBaseMySQL.setURL(URL);
         jdbcBaseMySQL.setUser(user);
@@ -16,6 +17,7 @@ public class Configuration {
 
 
     public Connection setCrendentialsPostgre(String URL, String user, String password) {
+
         jdbcBasePostgres.setPassword(password);
         jdbcBasePostgres.setURL(URL);
         jdbcBasePostgres.setUser(user);

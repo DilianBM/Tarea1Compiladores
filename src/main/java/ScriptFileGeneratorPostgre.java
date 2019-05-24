@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
-public abstract class ScriptFileGeneratorPostgre extends ScriptGenerator {
+public  class ScriptFileGeneratorPostgre extends ScriptGenerator {
 
     @Override
     public void createScript(String ruta) {
