@@ -1,7 +1,8 @@
+import java.sql.Connection;
 import java.util.List;
 
-public class TablesCreatorBD {
+public abstract class TablesCreatorBD extends ConfigurationStorage {
 
-    public void createTables(List<String> sentences) {
+    public void createTables(Connection c) {
     }
 }

@@ -22,7 +22,7 @@ public abstract class ScriptFileGeneratorPostgre extends ScriptGenerator {
 
             for (int i = 0; i < sentences.size(); i++) {
                 System.out.println(sentences.get(i));
-                bw.write(sentences.get(i) + "\n");
+                bw.write(sentences.get(i)+"\n");
             }
 
             bw.close();

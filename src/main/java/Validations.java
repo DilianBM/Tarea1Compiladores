@@ -1,5 +1,6 @@
 import Relaciones.OnetoManyClass;
 import Relaciones.OnetoOneClass;
+import net.bytebuddy.asm.Advice;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.CycleDetector;
@@ -67,7 +68,14 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                vect[2] = values.getName();
+                                Column column=values.getAnnotation(Column.class);
+                                if (column.name().compareToIgnoreCase("") != 0) {
+                                    vect[2]=column.name();
+
+                                } else {
+                                    vect[2] = values.getName();
+                                }
+
                                 vect[3] = values.getType().getSimpleName();
 
                             }
@@ -122,7 +130,13 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                vect[2] = values.getName();
+                                Column column=values.getAnnotation(Column.class);
+                                if (column.name().compareToIgnoreCase("") != 0) {
+                                    vect[2]=column.name();
+
+                                } else {
+                                    vect[2] = values.getName();
+                                }
                                 vect[3] = values.getType().getSimpleName();
 
                             }
@@ -171,8 +185,14 @@ public class Validations {
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
 
-                              //  System.out.println("Llave primaria mtm: " + values.getName() + " Tipo: " + values.getType().getSimpleName());
-                                vect[2] = values.getName();
+                                //  System.out.println("Llave primaria mtm: " + values.getName() + " Tipo: " + values.getType().getSimpleName());
+                                Column column=values.getAnnotation(Column.class);
+                                if (column.name().compareToIgnoreCase("") != 0) {
+                                    vect[2]=column.name();
+
+                                } else {
+                                    vect[2] = values.getName();
+                                }
                                 vect[3] = values.getType().getSimpleName();
                             }
                         }
@@ -183,9 +203,13 @@ public class Validations {
                 System.err.println("Got exception: " + ex.getMessage());
             }
         }
+        if (vect[0].compareToIgnoreCase("false") == 0) {
+            System.out.println("No existe la clase relacionada" + nombreTargetEntity);
+            System.exit(0);
+        }
+
         return vect;
     }
-
 
 
     public String[] validarRelacionMTO(String nombreTargetEntity, List<Class<?>> cls) {
@@ -213,7 +237,13 @@ public class Validations {
                         Field[] fields = cl.getDeclaredFields();
                         for (Field values : fields) {
                             if (values.isAnnotationPresent(Id.class)) {
-                                vect[2] = values.getName();
+                                Column column=values.getAnnotation(Column.class);
+                                if (column.name().compareToIgnoreCase("") != 0) {
+                                    vect[2]=column.name();
+
+                                } else {
+                                    vect[2] = values.getName();
+                                }
                                 vect[3] = values.getType().getSimpleName();
 
                             }
@@ -263,6 +293,7 @@ public class Validations {
         boolean ciclo = cycleDetector.detectCycles();
         if (ciclo) {
             System.out.println("SI hay ciclos");
+            System.exit(0);
         } else {
             System.out.println("NO hay ciclos");
 
@@ -271,6 +302,8 @@ public class Validations {
 
 
     }
+
+
 
 
 }

@@ -2,9 +2,16 @@ package Conexiones;
 
 import java.sql.*;
 
-public class JDBCBasePostgres  extends ConfigurationJDBCConection{
+public class JDBCBasePostgres extends ConfigurationJDBCConection {
 
 
+    public Connection connection;
+    ;
+
+
+    public Connection getC() {
+        return connection;
+    }
 
     public JDBCBasePostgres() {
 
@@ -12,7 +19,7 @@ public class JDBCBasePostgres  extends ConfigurationJDBCConection{
 
     @Override
     public void createConection() {
-        Connection connection;
+
         try {
             try {
                 Class.forName("org.postgresql.Driver");

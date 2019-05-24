@@ -78,7 +78,7 @@ public class MySQLSentences extends SentenceGenerator {
                                     values += " NOT NULL ";
                                 }
                             } else {
-                                values += " FLOAT " + " (" + entidades.get(i).getColumns().get(j).getPrecision() + "," + entidades.get(i).getColumns().get(j).getScale() + ")";
+                                values += " FLOAT ";
                                 if (!entidades.get(i).getColumns().get(j).getNullable()) {
                                     values += " NOT NULL ";
 
@@ -239,7 +239,7 @@ public class MySQLSentences extends SentenceGenerator {
                     values += " NOT NULL ";
                 }
             } else {
-                values += " FLOAT " + " (" + columna.getPrecision() + "," + columna.getScale() + ")";
+                values += " FLOAT " ;
                 if (!columna.getNullable()) {
                     values += " NOT NULL ";
 

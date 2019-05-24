@@ -372,7 +372,8 @@ public class Analyzer {
         if (values.isAnnotationPresent(JoinColumn.class)) {
             JoinColumn jc = values.getAnnotation(JoinColumn.class);
             if (jc.name().compareToIgnoreCase("") != 0) {
-                relacionNueva.setNameJoinColumn(jc.name());
+                relacionNueva.setNameJoinColumn(jc.name()+entidad.getNombTable());
+                System.out.println(jc.name());
             } else {
                 relacionNueva.setNameJoinColumn(values.getName() + "_id");
             }
@@ -446,7 +447,10 @@ public class Analyzer {
 
 
         } else {
-            //System.out.println("No se encontro la clase relacionada.");
+            if(vect[0].compareToIgnoreCase("true")!=0){
+                System.out.println("No existe la clase relacionada"+ prue);
+                System.exit(0);
+            }
         }
 
     }
@@ -539,7 +543,8 @@ public class Analyzer {
             entidad.setColumns(columna);
 
         } else {
-            //System.out.println("No se encontro la clase relacionada.");
+            System.out.println("No existe la clase relacionada"+ prue);
+            System.exit(0);
         }
     }
 

@@ -14,10 +14,10 @@ public class B  {
     @Column(length = 244)
     private String variable;
 
-    @Column
+  /*  @Column
     @OneToOne()
     @JoinColumn(name = "C_FK")
-    public  C cPequeño;
+    public  C cPequeño;*/
 
 
     public String propiedad1;
